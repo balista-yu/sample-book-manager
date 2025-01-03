@@ -1,0 +1,65 @@
+name: 'sample-book-manager'
+
+services:
+  backend:
+    container_name: sample-book-manager-backend-container
+    hostname: sample-book-manager-backend-server
+    image: sample-book-manager/backend:dev
+    build:
+      context: .
+      dockerfile: ./infra/docker/backend/Dockerfile
+      cache_from:
+        - sample-book-manager/backend:cache
+      target: dev
+    depends_on:
+      - postgres
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    networks:
+      - default
+    ports:
+      - '18084:8080'
+    volumes:
+      - ./backend:/app
+
+  postgres:
+    container_name: sample-book-manager-postgres-container
+    hostname: sample-book-manager-postgres-server
+    image: sample-book-manager/postgres:dev
+    build:
+      context: .
+      dockerfile: ./infra/docker/postgres/Dockerfile
+      cache_from:
+        - sample-book-manager/postgres:cache
+    restart: always
+    ports:
+      - '15435:5432'
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB_NAME:-sample_book_manager}
+      - POSTGRES_USER=${POSTGRES_DB_USER:-test}
+      - POSTGRES_PASSWORD=${POSTGRES_DB_PASS:-test}
+      - TZ=Asia/Tokyo
+    volumes:
+      - postgres-data-volume:/var/lib/postgresql/data
+      - ./infra/docker/postgres/init:/docker-entrypoint-initdb.d/
+    networks:
+      - default
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U test"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+networks:
+  default:
+    name: sample-book-manager
+
+volumes:
+  postgres-data-volume:
+    name: sample-book-manager-postgres-data
+    driver: local
