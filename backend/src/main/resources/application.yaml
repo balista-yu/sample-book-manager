@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:postgresql://sample-book-manager-postgres-container:5432/sample_book_manager
-    username: root
-    password: mysql
+    username: test
+    password: test
     driverClassName: org.postgresql.Driver
   jackson:
     property-naming-strategy: SNAKE_CASE
