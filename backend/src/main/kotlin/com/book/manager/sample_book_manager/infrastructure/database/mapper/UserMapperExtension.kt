@@ -8,14 +8,13 @@ import com.book.manager.sample_book_manager.infrastructure.database.mapper.UserD
 import com.book.manager.sample_book_manager.infrastructure.database.mapper.UserDynamicSqlSupport.User.roleType
 import com.book.manager.sample_book_manager.infrastructure.database.record.UserRecord
 import org.mybatis.dynamic.sql.util.kotlin.*
-import org.mybatis.dynamic.sql.SqlBuilder.isEqualTo
 import org.mybatis.dynamic.sql.util.kotlin.mybatis3.*
 
 fun UserMapper.count(completer: CountCompleter) = countFrom(this::count, User, completer)
 
 fun UserMapper.delete(completer: DeleteCompleter) = deleteFrom(this::delete, User, completer)
 
-fun UserMapper.deleteByPrimaryKey(id_: Int) = delete { where(id, isEqualTo(id_)) }
+fun UserMapper.deleteByPrimaryKey(id_: Int) = delete { where{ id isEqualTo id_} }
 
 fun UserMapper.insert(record: UserRecord) = insert(this::insert, record, User) {
     map(id).toProperty("id")
@@ -52,16 +51,16 @@ fun UserMapper.select(completer: SelectCompleter) = selectList(this::selectMany,
 fun UserMapper.selectDistinct(completer: SelectCompleter) =
     selectDistinct(this::selectMany, columnList, User, completer)
 
-fun UserMapper.selectByPrimaryKey(id_: Int) = selectOne { where(id, isEqualTo(id_)) }
+fun UserMapper.selectByPrimaryKey(id_: Int) = selectOne { where{ id isEqualTo id_} }
 
 fun UserMapper.update(completer: UpdateCompleter) = update(this::update, User, completer)
 
 fun KotlinUpdateBuilder.updateAllColumns(record: UserRecord) = apply {
-    set(id).equalTo(record::id)
-    set(email).equalTo(record::email)
-    set(password).equalTo(record::password)
-    set(name).equalTo(record::name)
-    set(roleType).equalTo(record::roleType)
+    set(id).equalToWhenPresent(record::id)
+    set(email).equalToWhenPresent(record::email)
+    set(password).equalToWhenPresent(record::password)
+    set(name).equalToWhenPresent(record::name)
+    set(roleType).equalToWhenPresent(record::roleType)
 }
 
 fun KotlinUpdateBuilder.updateSelectiveColumns(record: UserRecord) = apply {
@@ -73,11 +72,11 @@ fun KotlinUpdateBuilder.updateSelectiveColumns(record: UserRecord) = apply {
 }
 
 fun UserMapper.updateByPrimaryKey(record: UserRecord) = update {
-    set(email).equalTo(record::email)
-    set(password).equalTo(record::password)
-    set(name).equalTo(record::name)
-    set(roleType).equalTo(record::roleType)
-    where(id, isEqualTo(record::id))
+    set(email).equalToWhenPresent(record::email)
+    set(password).equalToWhenPresent(record::password)
+    set(name).equalToWhenPresent(record::name)
+    set(roleType).equalToWhenPresent(record::roleType)
+    where { id isEqualToWhenPresent record.id }
 }
 
 fun UserMapper.updateByPrimaryKeySelective(record: UserRecord) = update {
@@ -85,5 +84,5 @@ fun UserMapper.updateByPrimaryKeySelective(record: UserRecord) = update {
     set(password).equalToWhenPresent(record::password)
     set(name).equalToWhenPresent(record::name)
     set(roleType).equalToWhenPresent(record::roleType)
-    where(id, isEqualTo(record::id))
+    where { id isEqualToWhenPresent record.id }
 }

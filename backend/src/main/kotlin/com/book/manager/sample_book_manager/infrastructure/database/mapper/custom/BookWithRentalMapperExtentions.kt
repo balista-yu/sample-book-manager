@@ -15,8 +15,7 @@ import org.mybatis.dynamic.sql.SqlBuilder.equalTo
 import org.mybatis.dynamic.sql.SqlBuilder.isEqualTo
 import org.mybatis.dynamic.sql.SqlBuilder.on
 import org.mybatis.dynamic.sql.SqlBuilder.select
-import org.mybatis.dynamic.sql.SqlBuilder.where
-import org.mybatis.dynamic.sql.util.kotlin.mybatis3.leftJoin
+import org.mybatis.dynamic.sql.render.RenderingStrategies.MYBATIS3
 
 private val columnList = listOf(
     id,
@@ -29,20 +28,22 @@ private val columnList = listOf(
 )
 
 fun BookWithRentalMapper.select(): List<BookWithRentalRecord> {
-    val selectStatement = select(columnList).from(Book, "b") {
-        leftJoin(Rental, "r") {
-            on(id, equalTo(bookId))
-        }
-    }
+    val selectStatement = select(columnList)
+        .from(Book, "b")
+        .leftJoin(Rental, on(id, equalTo(bookId)))
+        .build()
+        .render(MYBATIS3)
+
     return selectMany(selectStatement)
 }
 
 fun BookWithRentalMapper.selectByPrimaryKey(id_: Int): BookWithRentalRecord? {
-    val selectStatement = select(columnList).from(Book, "b") {
-        leftJoin(Rental, "r") {
-            on(id, equalTo(bookId))
-        }
-        where(id, isEqualTo(id_))
-    }
+    val selectStatement = select(columnList)
+        .from(Book, "b")
+        .leftJoin(Rental, on(id, equalTo(bookId)))
+        .where(id, isEqualTo(id_))
+        .build()
+        .render(MYBATIS3)
+
     return selectOne(selectStatement)
 }

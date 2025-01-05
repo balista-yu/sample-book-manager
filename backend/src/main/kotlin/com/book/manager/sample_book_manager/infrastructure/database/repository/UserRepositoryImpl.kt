@@ -7,6 +7,8 @@ import com.book.manager.sample_book_manager.infrastructure.database.mapper.UserM
 import com.book.manager.sample_book_manager.infrastructure.database.mapper.selectByPrimaryKey
 import com.book.manager.sample_book_manager.infrastructure.database.record.UserRecord
 import org.mybatis.dynamic.sql.SqlBuilder.isEqualTo
+import org.mybatis.dynamic.sql.render.RenderingStrategies.MYBATIS3
+import org.mybatis.dynamic.sql.select.SelectDSL
 import org.springframework.stereotype.Repository
 
 @Suppress("SpringJavaInjectionPointsAutowiringInspection")
@@ -15,9 +17,13 @@ class UserRepositoryImpl(
     private val mapper: UserMapper
 ) : UserRepository {
     override fun find(email: String): User? {
-        val record = mapper.selectOne {
-            where(UserDynamicSqlSupport.User.email, isEqualTo(email))
-        }
+        val selectStatement = SelectDSL.select(UserDynamicSqlSupport.User.allColumns())
+            .from(UserDynamicSqlSupport.User)
+            .where(UserDynamicSqlSupport.User.email, isEqualTo(email))
+            .build()
+            .render(MYBATIS3)
+
+        val record = mapper.selectOne(selectStatement)
         return record?.let { toModel(it) }
     }
 

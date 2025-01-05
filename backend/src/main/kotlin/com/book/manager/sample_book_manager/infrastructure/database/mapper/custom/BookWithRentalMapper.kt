@@ -1,6 +1,7 @@
 package com.book.manager.sample_book_manager.infrastructure.database.mapper.custom
 
 import com.book.manager.sample_book_manager.infrastructure.database.record.custom.BookWithRentalRecord
+import org.apache.ibatis.annotations.Mapper
 import org.apache.ibatis.annotations.Result
 import org.apache.ibatis.annotations.ResultMap
 import org.apache.ibatis.annotations.Results
@@ -9,6 +10,7 @@ import org.apache.ibatis.type.JdbcType
 import org.mybatis.dynamic.sql.select.render.SelectStatementProvider
 import org.mybatis.dynamic.sql.util.SqlProviderAdapter
 
+@Mapper
 interface BookWithRentalMapper {
     @SelectProvider(type = SqlProviderAdapter::class, method = "select")
     @Results(

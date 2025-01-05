@@ -7,16 +7,15 @@ import com.book.manager.sample_book_manager.infrastructure.database.mapper.BookD
 import com.book.manager.sample_book_manager.infrastructure.database.mapper.BookDynamicSqlSupport.Book.releaseDate
 import com.book.manager.sample_book_manager.infrastructure.database.record.BookRecord
 import org.mybatis.dynamic.sql.util.kotlin.*
-import org.mybatis.dynamic.sql.SqlBuilder.isEqualTo
 import org.mybatis.dynamic.sql.util.kotlin.mybatis3.*
 
 fun BookMapper.count(completer: CountCompleter) = countFrom(this::count, Book, completer)
 
 fun BookMapper.delete(completer: DeleteCompleter) = deleteFrom(this::delete, Book, completer)
 
-fun BookMapper.deleteByPrimaryKey(id_: Int) = delete { where(id, isEqualTo(id_)) }
+fun BookMapper.deleteByPrimaryKey(id_: Int) = delete { where{ id isEqualTo id_} }
 
-fun BookMapper.insert(record: BookRecord) = insert(this::insert, record, Book) {
+fun BookMapper.insertOne(record: BookRecord) = insert(this::insert, record, Book) {
     map(id).toProperty("id")
     map(title).toProperty("title")
     map(author).toProperty("author")
@@ -48,15 +47,15 @@ fun BookMapper.select(completer: SelectCompleter) = selectList(this::selectMany,
 fun BookMapper.selectDistinct(completer: SelectCompleter) =
     selectDistinct(this::selectMany, columnList, Book, completer)
 
-fun BookMapper.selectByPrimaryKey(id_: Int) = selectOne { where(id, isEqualTo(id_)) }
+fun BookMapper.selectByPrimaryKey(id_: Int) = selectOne { where{ id isEqualTo id_} }
 
 fun BookMapper.update(completer: UpdateCompleter) = update(this::update, Book, completer)
 
 fun KotlinUpdateBuilder.updateAllColumns(record: BookRecord) = apply {
-    set(id).equalTo(record::id)
-    set(title).equalTo(record::title)
-    set(author).equalTo(record::author)
-    set(releaseDate).equalTo(record::releaseDate)
+    set(id).equalToWhenPresent(record::id)
+    set(title).equalToWhenPresent(record::title)
+    set(author).equalToWhenPresent(record::author)
+    set(releaseDate).equalToWhenPresent(record::releaseDate)
 }
 
 fun KotlinUpdateBuilder.updateSelectiveColumns(record: BookRecord) = apply {
@@ -67,15 +66,15 @@ fun KotlinUpdateBuilder.updateSelectiveColumns(record: BookRecord) = apply {
 }
 
 fun BookMapper.updateByPrimaryKey(record: BookRecord) = update {
-    set(title).equalTo(record::title)
-    set(author).equalTo(record::author)
-    set(releaseDate).equalTo(record::releaseDate)
-    where(id, isEqualTo(record::id))
+    set(title).equalToWhenPresent(record::title)
+    set(author).equalToWhenPresent(record::author)
+    set(releaseDate).equalToWhenPresent(record::releaseDate)
+    where { id isEqualToWhenPresent record.id }
 }
 
 fun BookMapper.updateByPrimaryKeySelective(record: BookRecord) = update {
     set(title).equalToWhenPresent(record::title)
     set(author).equalToWhenPresent(record::author)
     set(releaseDate).equalToWhenPresent(record::releaseDate)
-    where(id, isEqualTo(record::id))
+    where { id isEqualToWhenPresent record.id }
 }
