@@ -19,9 +19,17 @@ CREATE DATABASE sample_book_manager_test
 
 \c sample_book_manager;
 
-CREATE TYPE IF NOT EXISTS role_type AS ENUM ('ADMIN', 'USER');
+DO
+$$
+BEGIN
+    IF
+NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'role_type') THEN
+    CREATE TYPE role_type AS ENUM ('ADMIN', 'USER');
+END IF;
+END
+$$;
 
-CREATE TABLE IF NOT EXISTS user (
+CREATE TABLE IF NOT EXISTS "user" (
     id SERIAL PRIMARY KEY,
     email VARCHAR(256) UNIQUE NOT NULL,
     password VARCHAR(128) NOT NULL,
@@ -38,16 +46,24 @@ CREATE TABLE IF NOT EXISTS book (
 
 CREATE TABLE IF NOT EXISTS rental (
     book_id INTEGER NOT NULL PRIMARY KEY REFERENCES book (id),
-    user_id INTEGER NOT NULL REFERENCES user (id),
+    user_id INTEGER NOT NULL REFERENCES "user" (id),
     rental_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    rental_deadline TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    return_deadline TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 \c sample_book_manager_test;
 
-CREATE TYPE IF NOT EXISTS role_type AS ENUM ('ADMIN', 'USER');
+DO
+$$
+BEGIN
+    IF
+NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'role_type') THEN
+    CREATE TYPE role_type AS ENUM ('ADMIN', 'USER');
+END IF;
+END
+$$;
 
-CREATE TABLE IF NOT EXISTS user (
+CREATE TABLE IF NOT EXISTS "user" (
     id SERIAL PRIMARY KEY,
     email VARCHAR(256) UNIQUE NOT NULL,
     password VARCHAR(128) NOT NULL,
@@ -64,7 +80,7 @@ CREATE TABLE IF NOT EXISTS book (
 
 CREATE TABLE IF NOT EXISTS rental (
     book_id INTEGER NOT NULL PRIMARY KEY REFERENCES book (id),
-    user_id INTEGER NOT NULL REFERENCES user (id),
+    user_id INTEGER NOT NULL REFERENCES "user" (id),
     rental_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    rental_deadline TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    return_deadline TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
