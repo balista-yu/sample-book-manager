@@ -9,7 +9,7 @@ import com.book.manager.sample_book_manager.infrastructure.database.mapper.custo
 import com.book.manager.sample_book_manager.infrastructure.database.mapper.custom.select
 import com.book.manager.sample_book_manager.infrastructure.database.mapper.custom.selectByPrimaryKey
 import com.book.manager.sample_book_manager.infrastructure.database.mapper.deleteByPrimaryKey
-import com.book.manager.sample_book_manager.infrastructure.database.mapper.insertOne
+import com.book.manager.sample_book_manager.infrastructure.database.mapper.insert
 import com.book.manager.sample_book_manager.infrastructure.database.mapper.updateByPrimaryKeySelective
 import com.book.manager.sample_book_manager.infrastructure.database.record.BookRecord
 import com.book.manager.sample_book_manager.infrastructure.database.record.custom.BookWithRentalRecord
@@ -31,7 +31,7 @@ class BookRepositoryImpl(
     }
 
     override fun register(book: Book) {
-        bookMapper.insertOne(toRecord(book))
+        bookMapper.insert(toRecord(book))
     }
 
     override fun update(id: Int, title: String?, author: String?, releaseDate: LocalDateTime?) {

@@ -16,7 +16,7 @@ fun RentalMapper.delete(completer: DeleteCompleter) = deleteFrom(this::delete, R
 
 fun RentalMapper.deleteByPrimaryKey(bookId_: Int) = delete { where { id isEqualTo bookId_ } }
 
-fun RentalMapper.insertOne(record: RentalRecord) = insert(this::insert, record, Rental) {
+fun RentalMapper.insert(record: RentalRecord) = insert(this::insert, record, Rental) {
     map(bookId).toProperty("bookId")
     map(userId).toProperty("userId")
     map(rentalDatetime).toProperty("rentalDatetime")

@@ -15,7 +15,7 @@ fun BookMapper.delete(completer: DeleteCompleter) = deleteFrom(this::delete, Boo
 
 fun BookMapper.deleteByPrimaryKey(id_: Int) = delete { where{ id isEqualTo id_} }
 
-fun BookMapper.insertOne(record: BookRecord) = insert(this::insert, record, Book) {
+fun BookMapper.insert(record: BookRecord) = insert(this::insert, record, Book) {
     map(id).toProperty("id")
     map(title).toProperty("title")
     map(author).toProperty("author")
