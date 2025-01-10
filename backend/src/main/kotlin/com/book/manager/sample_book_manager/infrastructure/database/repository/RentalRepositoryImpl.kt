@@ -24,7 +24,7 @@ class RentalRepositoryImpl(
     private fun toRecord(model: Rental): RentalRecord {
         return RentalRecord(
             model.bookId,
-            model.userId,
+            model.operatorId,
             model.rentalDatetime,
             model.returnDeadline
         )

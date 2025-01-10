@@ -1,6 +1,6 @@
 package com.book.manager.sample_book_manager.infrastructure.database.mapper
 
-import com.book.manager.sample_book_manager.infrastructure.database.record.UserRecord
+import com.book.manager.sample_book_manager.infrastructure.database.record.OperatorRecord
 import org.apache.ibatis.annotations.DeleteProvider
 import org.apache.ibatis.annotations.InsertProvider
 import org.apache.ibatis.annotations.Mapper
@@ -19,7 +19,7 @@ import org.mybatis.dynamic.sql.update.render.UpdateStatementProvider
 import org.mybatis.dynamic.sql.util.SqlProviderAdapter
 
 @Mapper
-interface UserMapper {
+interface OperatorMapper {
     @SelectProvider(type = SqlProviderAdapter::class, method = "select")
     fun count(selectStatement: SelectStatementProvider): Long
 
@@ -27,18 +27,18 @@ interface UserMapper {
     fun delete(deleteStatement: DeleteStatementProvider): Int
 
     @InsertProvider(type = SqlProviderAdapter::class, method = "insert")
-    fun insert(insertStatement: InsertStatementProvider<UserRecord>): Int
+    fun insert(insertStatement: InsertStatementProvider<OperatorRecord>): Int
 
     @InsertProvider(type = SqlProviderAdapter::class, method = "insert")
-    fun insertMultiple(multipleInsertStatement: MultiRowInsertStatementProvider<UserRecord>): Int
+    fun insertMultiple(multipleInsertStatement: MultiRowInsertStatementProvider<OperatorRecord>): Int
 
     @SelectProvider(type = SqlProviderAdapter::class, method = "select")
-    @ResultMap("UserRecordResult")
-    fun selectOne(selectStatement: SelectStatementProvider): UserRecord?
+    @ResultMap("OperatorRecordResult")
+    fun selectOne(selectStatement: SelectStatementProvider): OperatorRecord?
 
     @SelectProvider(type = SqlProviderAdapter::class, method = "select")
     @Results(
-        id = "UserRecordResult", value = [
+        id = "OperatorRecordResult", value = [
             Result(column = "id", property = "id", jdbcType = JdbcType.INTEGER, id = true),
             Result(column = "email", property = "email", jdbcType = JdbcType.VARCHAR),
             Result(column = "password", property = "password", jdbcType = JdbcType.VARCHAR),
@@ -51,7 +51,7 @@ interface UserMapper {
             ),
         ]
     )
-    fun selectMany(selectStatement: SelectStatementProvider): List<UserRecord>
+    fun selectMany(selectStatement: SelectStatementProvider): List<OperatorRecord>
 
     @UpdateProvider(type = SqlProviderAdapter::class, method = "update")
     fun update(updateStatement: UpdateStatementProvider): Int

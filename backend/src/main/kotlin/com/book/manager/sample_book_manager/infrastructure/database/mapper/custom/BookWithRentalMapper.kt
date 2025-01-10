@@ -20,7 +20,7 @@ interface BookWithRentalMapper {
             Result(column = "title", property = "title", jdbcType = JdbcType.VARCHAR),
             Result(column = "author", property = "author", jdbcType = JdbcType.VARCHAR),
             Result(column = "release_date", property = "releaseDate", jdbcType = JdbcType.TIMESTAMP),
-            Result(column = "user_id", property = "userId", jdbcType = JdbcType.INTEGER),
+            Result(column = "operator_id", property = "operatorId", jdbcType = JdbcType.INTEGER),
             Result(column = "rental_datetime", property = "rentalDatetime", jdbcType = JdbcType.TIMESTAMP),
             Result(column = "return_deadline", property = "returnDeadline", jdbcType = JdbcType.TIMESTAMP),
         ]

@@ -51,10 +51,10 @@ class BookRepositoryImpl(
             record.author!!,
             record.releaseDate!!
         )
-        val rental = record.userId?.let {
+        val rental = record.operatorId?.let {
             Rental(
                 record.id!!,
-                record.userId!!,
+                record.operatorId!!,
                 record.rentalDatetime!!,
                 record.returnDeadline!!
             )

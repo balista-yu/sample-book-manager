@@ -40,7 +40,7 @@ interface RentalMapper {
         id = "RentalRecordResult",
         value = [
             Result(column = "book_id", property = "bookId", jdbcType = JdbcType.INTEGER, id = true),
-            Result(column = "user_id", property = "userId", jdbcType = JdbcType.INTEGER),
+            Result(column = "operator_id", property = "operatorId", jdbcType = JdbcType.INTEGER),
             Result(column = "rental_datetime", property = "rentalDatetime", jdbcType = JdbcType.TIMESTAMP),
             Result(column = "return_deadline", property = "returnDeadline", jdbcType = JdbcType.TIMESTAMP),
         ]

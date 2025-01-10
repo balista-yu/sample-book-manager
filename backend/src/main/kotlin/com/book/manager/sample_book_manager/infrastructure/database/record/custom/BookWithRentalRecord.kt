@@ -7,7 +7,7 @@ data class BookWithRentalRecord(
     var title: String? = null,
     var author: String? = null,
     var releaseDate: LocalDateTime? = null,
-    var userId: Int? = null,
+    var operatorId: Int? = null,
     var rentalDatetime: LocalDateTime? = null,
     var returnDeadline: LocalDateTime? = null
 )

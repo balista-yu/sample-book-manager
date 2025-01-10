@@ -4,8 +4,8 @@ import com.book.manager.sample_book_manager.domain.enum.RoleType
 import org.mybatis.dynamic.sql.SqlTable
 import java.sql.JDBCType
 
-object UserDynamicSqlSupport {
-    object User : SqlTable("user") {
+object OperatorDynamicSqlSupport {
+    object Operator : SqlTable("operator") {
         val id = column<Int>("id", JDBCType.INTEGER)
         val email = column<String>("email", JDBCType.VARCHAR)
         val password = column<String>("password", JDBCType.VARCHAR)

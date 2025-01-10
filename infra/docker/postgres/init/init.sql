@@ -24,12 +24,12 @@ $$
 BEGIN
     IF
 NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'role_type') THEN
-    CREATE TYPE role_type AS ENUM ('ADMIN', 'USER');
+    CREATE TYPE role_type AS ENUM ('ADMIN', 'GENERAL');
 END IF;
 END
 $$;
 
-CREATE TABLE IF NOT EXISTS "user" (
+CREATE TABLE IF NOT EXISTS operator (
     id SERIAL PRIMARY KEY,
     email VARCHAR(256) UNIQUE NOT NULL,
     password VARCHAR(128) NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS book (
 
 CREATE TABLE IF NOT EXISTS rental (
     book_id INTEGER NOT NULL PRIMARY KEY REFERENCES book (id),
-    user_id INTEGER NOT NULL REFERENCES "user" (id),
+    operator_id INTEGER NOT NULL REFERENCES operator (id),
     rental_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     return_deadline TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -58,12 +58,12 @@ $$
 BEGIN
     IF
 NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'role_type') THEN
-    CREATE TYPE role_type AS ENUM ('ADMIN', 'USER');
+    CREATE TYPE role_type AS ENUM ('ADMIN', 'GENERAL');
 END IF;
 END
 $$;
 
-CREATE TABLE IF NOT EXISTS "user" (
+CREATE TABLE IF NOT EXISTS operator (
     id SERIAL PRIMARY KEY,
     email VARCHAR(256) UNIQUE NOT NULL,
     password VARCHAR(128) NOT NULL,
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS book (
 
 CREATE TABLE IF NOT EXISTS rental (
     book_id INTEGER NOT NULL PRIMARY KEY REFERENCES book (id),
-    user_id INTEGER NOT NULL REFERENCES "user" (id),
+    operator_id INTEGER NOT NULL REFERENCES operator (id),
     rental_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     return_deadline TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

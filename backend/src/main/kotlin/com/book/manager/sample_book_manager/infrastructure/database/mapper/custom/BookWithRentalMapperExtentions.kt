@@ -9,7 +9,7 @@ import com.book.manager.sample_book_manager.infrastructure.database.mapper.Renta
 import com.book.manager.sample_book_manager.infrastructure.database.mapper.RentalDynamicSqlSupport.Rental.bookId
 import com.book.manager.sample_book_manager.infrastructure.database.mapper.RentalDynamicSqlSupport.Rental.rentalDatetime
 import com.book.manager.sample_book_manager.infrastructure.database.mapper.RentalDynamicSqlSupport.Rental.returnDeadline
-import com.book.manager.sample_book_manager.infrastructure.database.mapper.RentalDynamicSqlSupport.Rental.userId
+import com.book.manager.sample_book_manager.infrastructure.database.mapper.RentalDynamicSqlSupport.Rental.operatorId
 import com.book.manager.sample_book_manager.infrastructure.database.record.custom.BookWithRentalRecord
 import org.mybatis.dynamic.sql.SqlBuilder.equalTo
 import org.mybatis.dynamic.sql.SqlBuilder.isEqualTo
@@ -22,7 +22,7 @@ private val columnList = listOf(
     title,
     author,
     releaseDate,
-    userId,
+    operatorId,
     rentalDatetime,
     returnDeadline
 )

@@ -1,14 +1,14 @@
 package com.book.manager.sample_book_manager.application.service
 
-import com.book.manager.sample_book_manager.domain.model.User
-import com.book.manager.sample_book_manager.domain.repository.UserRepository
+import com.book.manager.sample_book_manager.domain.model.Operator
+import com.book.manager.sample_book_manager.domain.repository.OperatorRepository
 import org.springframework.stereotype.Service
 
 @Service
 class AuthenticationService(
-    private val userRepository: UserRepository
+    private val operatorRepository: OperatorRepository
 ) {
-    fun findUser(email: String): User? {
-        return userRepository.find(email)
+    fun findOperator(email: String): Operator? {
+        return operatorRepository.find(email)
     }
 }

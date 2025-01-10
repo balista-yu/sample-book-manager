@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 
 data class RentalRecord(
     var bookId: Int? = null,
-    var userId: Int? = null,
+    var operatorId: Int? = null,
     var rentalDatetime: LocalDateTime? = null,
     var returnDeadline: LocalDateTime? = null
 )
