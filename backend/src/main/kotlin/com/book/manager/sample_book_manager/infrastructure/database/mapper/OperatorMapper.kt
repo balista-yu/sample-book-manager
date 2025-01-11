@@ -29,7 +29,7 @@ interface OperatorMapper {
     @InsertProvider(type = SqlProviderAdapter::class, method = "insert")
     fun insert(insertStatement: InsertStatementProvider<OperatorRecord>): Int
 
-    @InsertProvider(type = SqlProviderAdapter::class, method = "insert")
+    @InsertProvider(type = SqlProviderAdapter::class, method = "insertMultiple")
     fun insertMultiple(multipleInsertStatement: MultiRowInsertStatementProvider<OperatorRecord>): Int
 
     @SelectProvider(type = SqlProviderAdapter::class, method = "select")

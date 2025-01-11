@@ -28,7 +28,7 @@ interface BookMapper {
     @InsertProvider(type = SqlProviderAdapter::class, method = "insert")
     fun insert(insertStatement: InsertStatementProvider<BookRecord>): Int
 
-    @InsertProvider(type = SqlProviderAdapter::class, method = "insert")
+    @InsertProvider(type = SqlProviderAdapter::class, method = "insertMultiple")
     fun insertMultiple(multipleInsertStatement: MultiRowInsertStatementProvider<BookRecord>): Int
 
     @SelectProvider(type = SqlProviderAdapter::class, method = "select")

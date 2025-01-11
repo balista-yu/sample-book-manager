@@ -1,6 +1,5 @@
 package com.book.manager.sample_book_manager.infrastructure.database.mapper
 
-import com.book.manager.sample_book_manager.infrastructure.database.mapper.BookDynamicSqlSupport.Book.id
 import com.book.manager.sample_book_manager.infrastructure.database.mapper.RentalDynamicSqlSupport.Rental
 import com.book.manager.sample_book_manager.infrastructure.database.mapper.RentalDynamicSqlSupport.Rental.bookId
 import com.book.manager.sample_book_manager.infrastructure.database.mapper.RentalDynamicSqlSupport.Rental.rentalDatetime
@@ -14,7 +13,7 @@ fun RentalMapper.count(completer: CountCompleter) = countFrom(this::count, Renta
 
 fun RentalMapper.delete(completer: DeleteCompleter) = deleteFrom(this::delete, Rental, completer)
 
-fun RentalMapper.deleteByPrimaryKey(bookId_: Int) = delete { where { id isEqualTo bookId_ } }
+fun RentalMapper.deleteByPrimaryKey(bookId_: Int) = delete { where { bookId isEqualTo bookId_ } }
 
 fun RentalMapper.insert(record: RentalRecord) = insert(this::insert, record, Rental) {
     map(bookId).toProperty("bookId")
@@ -49,7 +48,7 @@ fun RentalMapper.select(completer: SelectCompleter) = selectList(this::selectMan
 fun RentalMapper.selectDistinct(completer: SelectCompleter) =
     selectDistinct(this::selectMany, columnList, Rental, completer)
 
-fun RentalMapper.selectByPrimaryKey(bookId_: Int) = selectOne { where { id isEqualTo bookId_ } }
+fun RentalMapper.selectByPrimaryKey(bookId_: Int) = selectOne { where { bookId isEqualTo bookId_ } }
 
 fun RentalMapper.update(completer: UpdateCompleter) = update(this::update, Rental, completer)
 

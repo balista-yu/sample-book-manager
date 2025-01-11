@@ -28,7 +28,7 @@ interface RentalMapper {
     @InsertProvider(type = SqlProviderAdapter::class, method = "insert")
     fun insert(insertStatement: InsertStatementProvider<RentalRecord>): Int
 
-    @InsertProvider(type = SqlProviderAdapter::class, method = "insert")
+    @InsertProvider(type = SqlProviderAdapter::class, method = "insertMultiple")
     fun insertMultiple(multipleInsertStatement: MultiRowInsertStatementProvider<RentalRecord>): Int
 
     @SelectProvider(type = SqlProviderAdapter::class, method = "select")
