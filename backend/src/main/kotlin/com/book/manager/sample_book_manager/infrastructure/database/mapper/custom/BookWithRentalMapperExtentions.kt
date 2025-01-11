@@ -30,7 +30,7 @@ private val columnList = listOf(
 fun BookWithRentalMapper.select(): List<BookWithRentalRecord> {
     val selectStatement = select(columnList)
         .from(Book, "b")
-        .leftJoin(Rental, on(id, equalTo(bookId)))
+        .leftJoin(Rental, "r", on(id, equalTo(bookId)))
         .build()
         .render(MYBATIS3)
 
@@ -40,7 +40,7 @@ fun BookWithRentalMapper.select(): List<BookWithRentalRecord> {
 fun BookWithRentalMapper.selectByPrimaryKey(id_: Int): BookWithRentalRecord? {
     val selectStatement = select(columnList)
         .from(Book, "b")
-        .leftJoin(Rental, on(id, equalTo(bookId)))
+        .leftJoin(Rental, "r", on(id, equalTo(bookId)))
         .where(id, isEqualTo(id_))
         .build()
         .render(MYBATIS3)
