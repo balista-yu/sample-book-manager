@@ -29,6 +29,8 @@ dependencies {
 	implementation("org.mybatis.dynamic-sql:mybatis-dynamic-sql:1.5.2")
 	implementation("org.postgresql:postgresql:42.7.4")
 	implementation("org.mybatis.generator:mybatis-generator-core:1.4.2")
+	implementation("org.springframework.session:spring-session-data-redis")
+	implementation("redis.clients:jedis")
 
 	runtimeOnly("org.postgresql:postgresql")
 

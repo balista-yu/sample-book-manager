@@ -55,6 +55,24 @@ services:
       retries: 5
       start_period: 30s
 
+  redis:
+    container_name: sample-book-manager-redis-container
+    hostname: sample-book-manager-redis-server
+    image: sample-book-manager/redis:dev
+    build:
+      context: .
+      dockerfile: ./infra/docker/redis/Dockerfile
+      cache_from:
+        - sample-book-manager/redis:cache
+    ports:
+      - '16379:6379'
+    volumes:
+      - redis-data-volume:/data
+      - ./infra/docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    command: "/usr/local/etc/redis/redis.conf"
+    networks:
+      - default
+
 networks:
   default:
     name: sample-book-manager
@@ -62,4 +80,7 @@ networks:
 volumes:
   postgres-data-volume:
     name: sample-book-manager-postgres-data
+    driver: local
+  redis-data-volume:
+    name: sample-book-manager-redis-data
     driver: local
