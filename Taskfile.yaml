@@ -50,3 +50,8 @@ tasks:
     desc: watch docker logs
     cmds:
       - docker compose logs --follow
+
+  run-tests:
+    desc: run Junit tests
+    cmds:
+      - docker compose exec backend ./gradlew test
