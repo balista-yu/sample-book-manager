@@ -32,6 +32,7 @@ dependencies {
 	implementation("org.springframework.session:spring-session-data-redis")
 	implementation("redis.clients:jedis")
 	implementation("org.springframework.boot:spring-boot-starter-aop")
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
 	runtimeOnly("org.postgresql:postgresql")
 
