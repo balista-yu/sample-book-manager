@@ -55,3 +55,8 @@ tasks:
     desc: run Junit tests
     cmds:
       - docker compose exec backend ./gradlew test
+
+  run-lint:
+    desc: run lint
+    cmds:
+      - docker compose exec backend ./gradlew detekt
