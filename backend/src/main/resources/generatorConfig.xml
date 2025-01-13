@@ -21,16 +21,16 @@
             <property name="useJSR310Types" value="true"/>
         </javaTypeResolver>
         <javaModelGenerator
-            targetPackage="com.book.manager.sample_book_manager.infrastructure.database.record"
+            targetPackage="com.book.manager.infrastructure.database.record"
             targetProject="src/main/kotlin">
         </javaModelGenerator>
         <javaClientGenerator
-            targetPackage="com.book.manager.sample_book_manager.infrastructure.database.mapper"
+            targetPackage="com.book.manager.infrastructure.database.mapper"
             targetProject="src/main/kotlin">
         </javaClientGenerator>
         <table tableName="%">
             <columnOverride column="role_type" typeHandler="org.apache.ibatis.type.EnumTypeHandler"
-                            javaType="com.book.manager.sample_book_manager.domain.enum.RoleType"/>
+                            javaType="com.book.manager.domain.enum.RoleType"/>
         </table>
     </context>
 </generatorConfiguration>

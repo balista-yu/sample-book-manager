@@ -1,9 +1,13 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
 	id("org.springframework.boot") version "3.4.1"
 	id("io.spring.dependency-management") version "1.1.7"
 	id("com.qqviaja.gradle.MybatisGenerator") version "2.5"
-	kotlin("jvm") version "1.9.25"
-	kotlin("plugin.spring") version "1.9.25"
+	id("io.gitlab.arturbosch.detekt").version("1.23.7")
+	kotlin("jvm") version "2.0.10"
+	kotlin("plugin.spring") version "2.0.10"
 }
 
 group = "com.book.manager"
@@ -17,6 +21,13 @@ java {
 
 repositories {
 	mavenCentral()
+}
+
+detekt {
+	buildUponDefaultConfig = true
+	allRules = false
+	config.setFrom("$projectDir/config/detekt/detekt.yaml")
+	autoCorrect = true
 }
 
 dependencies {
@@ -45,6 +56,10 @@ dependencies {
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
+
+	detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.7")
+	detektPlugins("io.gitlab.arturbosch.detekt:detekt-rules-libraries:1.23.7")
+	detektPlugins("io.gitlab.arturbosch.detekt:detekt-rules-ruleauthors:1.23.7")
 }
 
 kotlin {
@@ -53,10 +68,10 @@ kotlin {
 	}
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-	kotlinOptions {
-		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "21"
+tasks.withType<KotlinJvmCompile>().configureEach {
+	compilerOptions {
+		freeCompilerArgs.add("-Xjsr305=strict")
+		jvmTarget.set(JvmTarget.JVM_21)
 	}
 }
 
@@ -65,8 +80,9 @@ tasks.withType<Test> {
 }
 
 tasks.withType<org.springframework.boot.gradle.tasks.bundling.BootJar> {
-	mainClass.set("com.book.manager.sample_book_manager.SampleBookManagerApplication")
+	mainClass.set("com.book.manager.SampleBookManagerApplication")
 }
+
 tasks.register<Copy>("getDependencies") {
 	dependsOn("build")
 	from(configurations.runtimeClasspath)
