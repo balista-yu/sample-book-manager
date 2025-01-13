@@ -97,6 +97,10 @@ tasks.register<Copy>("getDependencies") {
 	}
 }
 
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+	doNotTrackState("Temporary workaround for Gradle state tracking issue")
+}
+
 configurations {
 	mybatisGenerator
 }
