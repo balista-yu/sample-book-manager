@@ -1,0 +1,106 @@
+name: Code Checker
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DOCKER_BUILDKIT: 1
+  COMPOSE_DOCKER_CLI_BUILD: 1
+  APP_IMAGE_TAG: sample-book-manager/backend:dev
+  APP_IMAGE_CACHE_TAG: sample-book-manager/backend:cache
+  DB_IMAGE_TAG: sample-book-manager/postgres:dev
+  DB_IMAGE_CACHE_TAG: sample-book-manager/postgres:cache
+  REDIS_IMAGE_TAG: sample-book-manager/redis:dev
+  REDIS_IMAGE_CACHE_TAG: sample-book-manager/redis:cache
+
+jobs:
+  image-cache-or-build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - ububtu-22.04
+
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v4
+
+      - name: Cache docker image
+        id: cache-docker-image
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.IMAGE_CACHE_DIR }}
+          key: ${{ runner.os }}-${{ env.IMAGE_CACHE_KEY }}-${{ hashFiles('compose.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.IMAGE_CACHE_KEY }}-
+
+      - name: Docker load
+        id: docker-load
+        if: steps.cache-docker-image.outputs.cache-hit == 'true'
+        run: docker image load -i ${IMAGE_CACHE_DIR}/image.tar
+
+      - name: Docker build
+        id: docker-build
+        run: docker compose build --build-arg BUILDKIT_INLINE_CACHE=1
+
+      - name: Docker tag and save
+        id: docker-tag-save
+        if: steps.cache-docker-image.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p ${IMAGE_CACHE_DIR}
+          docker image tag ${APP_IMAGE_TAG} ${APP_IMAGE_CACHE_TAG}
+          docker image tag ${DB_IMAGE_TAG} ${DB_IMAGE_CACHE_TAG}
+          docker image tag ${REDIS_IMAGE_TAG} ${REDIS_IMAGE_CACHE_TAG}
+          docker image save -o ${IMAGE_CACHE_DIR}/image.tar ${APP_IMAGE_CACHE_TAG} ${DB_IMAGE_CACHE_TAG} ${REDIS_IMAGE_CACHE_TAG}
+
+code-checker:
+  needs: image-cache-or-build
+  runs-on: ${{ matrix.os }}
+  strategy:
+    matrix:
+      os:
+        - ububtu-22.04
+
+  steps:
+    - name: Checkout
+      id: checkout
+      uses: actions/checkout@v4
+
+    - name: Cache docker image
+      id: cache-docker-image
+      uses: actions/cache@v4
+      with:
+        path: ${{ env.IMAGE_CACHE_DIR }}
+        key: ${{ runner.os }}-${{ env.IMAGE_CACHE_KEY }}-${{ hashFiles('compose.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-${{ env.IMAGE_CACHE_KEY }}-
+
+    - name: Docker load
+      id: docker-load
+      if: steps.cache-docker-image.outputs.cache-hit == 'true'
+      run: docker image load -i ${IMAGE_CACHE_DIR}/image.tar
+
+    - name: Docker compose build
+      id: docker-build
+      run: |
+        docker compose -f compose.yaml build --build-arg BUILDKIT_INLINE_CACHE=1
+
+    - name: Docker compose up
+      run: |
+        docker compose up -d --wait
+
+    - name: Run Junit tests
+      run: |
+        docker compose exec -T backend ./gradlew test
+
+    - name: Run Lint
+      run: |
+        docker compose exec -T backend ./gradlew detekt
