@@ -26,7 +26,7 @@ jobs:
     strategy:
       matrix:
         os:
-          - ububtu-22.04
+          - ubuntu-22.04
 
     steps:
       - name: Checkout
@@ -67,7 +67,7 @@ jobs:
     strategy:
       matrix:
         os:
-          - ububtu-22.04
+          - ubuntu-22.04
 
     steps:
       - name: Checkout
