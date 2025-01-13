@@ -93,7 +93,7 @@ jobs:
       - name: Docker compose build
         id: docker-build
         run: |
-          docker compose -f compose.yaml build --build-arg BUILDKIT_INLINE_CACHE=1
+          docker compose build --build-arg BUILDKIT_INLINE_CACHE=1
 
       - name: Docker compose up
         run: |
