@@ -19,6 +19,8 @@ env:
   DB_IMAGE_CACHE_TAG: sample-book-manager/postgres:cache
   REDIS_IMAGE_TAG: sample-book-manager/redis:dev
   REDIS_IMAGE_CACHE_TAG: sample-book-manager/redis:cache
+  IMAGE_CACHE_DIR: /tmp/cache/docker-image
+  IMAGE_CACHE_KEY: cache-image
 
 jobs:
   image-cache-or-build:
