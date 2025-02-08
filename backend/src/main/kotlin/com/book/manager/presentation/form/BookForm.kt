@@ -1,7 +1,7 @@
 package com.book.manager.presentation.form
 
-import com.book.manager.domain.model.BookWithRental
-import com.book.manager.domain.model.Rental
+import com.book.manager.domain.model.Book
+import com.book.manager.domain.model.value.Rental
 import java.time.LocalDateTime
 
 data class GetBookListResponse(val bookList: List<BookInfo>)
@@ -12,10 +12,10 @@ data class BookInfo(
     val author: String,
     val isRental: Boolean
 ) {
-    constructor(model: BookWithRental) : this(
-        id = model.book.id,
-        title = model.book.title,
-        author = model.book.author,
+    constructor(model: Book) : this(
+        id = model.id,
+        title = model.title,
+        author = model.author,
         isRental = model.isRental
     )
 }
@@ -27,11 +27,11 @@ data class GetBookDetailResponse(
     val releaseDate: LocalDateTime,
     val rentalInfo: RentalInfo?
 ) {
-    constructor(model: BookWithRental) : this(
-        id = model.book.id,
-        title = model.book.title,
-        author = model.book.author,
-        releaseDate = model.book.releaseDate,
+    constructor(model: Book) : this(
+        id = model.id,
+        title = model.title,
+        author = model.author,
+        releaseDate = model.releaseDate,
         rentalInfo = model.rental?.let { RentalInfo(it) }
     )
 }

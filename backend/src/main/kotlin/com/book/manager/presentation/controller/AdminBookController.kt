@@ -26,7 +26,8 @@ class AdminBookController(
                 id = request.id,
                 title = request.title,
                 author = request.author,
-                releaseDate = request.releaseDate
+                releaseDate = request.releaseDate,
+                rental = null,
             )
         )
     }

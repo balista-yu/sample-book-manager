@@ -1,10 +1,10 @@
 package com.book.manager.application.service
 
-import com.book.manager.domain.enum.RoleType
+import com.book.manager.core.enum.RoleTypes
 import com.book.manager.domain.model.Book
-import com.book.manager.domain.model.BookWithRental
 import com.book.manager.domain.model.Operator
-import com.book.manager.domain.model.Rental
+import com.book.manager.domain.model.value.Rental
+import com.book.manager.domain.model.value.RoleType
 import com.book.manager.domain.repository.BookRepository
 import com.book.manager.domain.repository.OperatorRepository
 import com.book.manager.domain.repository.RentalRepository
@@ -29,13 +29,12 @@ internal class RentalServiceTest {
     fun `endRental when book is rental then delete to rental`() {
         val operatorId = 100
         val bookId = 1000
-        val operator = Operator(operatorId, "test@test.com", "pass", "kotlin", RoleType.GENERAL)
-        val book = Book(bookId, "title", "author", LocalDateTime.now())
-        val rental = Rental(bookId, operatorId, LocalDateTime.now(), LocalDateTime.MAX)
-        val bookWithRental = BookWithRental(book, rental)
+        val operator = Operator(operatorId, "test@test.com", "pass", "kotlin", RoleType(RoleTypes.GENERAL))
+        val rental = Rental(operatorId, LocalDateTime.now(), LocalDateTime.MAX)
+        val book = Book(bookId, "title", "author", LocalDateTime.now(), rental)
 
         whenever(operatorRepository.find(any() as Int)).thenReturn(operator)
-        whenever(bookRepository.findWithRental(any())).thenReturn(bookWithRental)
+        whenever(bookRepository.findWithRental(any())).thenReturn(book)
 
         rentalService.endRental(bookId, operatorId)
 
@@ -48,12 +47,11 @@ internal class RentalServiceTest {
     fun `endRental when book is not rental then throw exception`() {
         val operatorId = 100
         val bookId = 1000
-        val operator = Operator(operatorId, "test@test.com", "pass", "kotlin", RoleType.GENERAL)
-        val book = Book(bookId, "title", "author", LocalDateTime.now())
-        val bookWithRental = BookWithRental(book, null)
+        val operator = Operator(operatorId, "test@test.com", "pass", "kotlin", RoleType(RoleTypes.GENERAL))
+        val book = Book(bookId, "title", "author", LocalDateTime.now(), null)
 
         whenever(operatorRepository.find(any() as Int)).thenReturn(operator)
-        whenever(bookRepository.findWithRental(any())).thenReturn(bookWithRental)
+        whenever(bookRepository.findWithRental(any())).thenReturn(book)
 
         val exception = Assertions.assertThrows(IllegalStateException::class.java) {
             rentalService.endRental(bookId, operatorId)

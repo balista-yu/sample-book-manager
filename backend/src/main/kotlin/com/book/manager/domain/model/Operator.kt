@@ -1,6 +1,6 @@
 package com.book.manager.domain.model
 
-import com.book.manager.domain.enum.RoleType
+import com.book.manager.domain.model.value.RoleType
 
 data class Operator(
     val id: Int,

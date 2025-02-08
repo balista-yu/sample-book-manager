@@ -1,6 +1,6 @@
 package com.book.manager.application.service
 
-import com.book.manager.domain.model.Rental
+import com.book.manager.domain.model.value.Rental
 import com.book.manager.domain.repository.BookRepository
 import com.book.manager.domain.repository.OperatorRepository
 import com.book.manager.domain.repository.RentalRepository
@@ -25,9 +25,11 @@ class RentalService(
 
         val rentalDateTime = LocalDateTime.now()
         val returnDeadline = rentalDateTime.plusDays(RENTAL_TERM_DAYS)
-        val rental = Rental(bookId, operatorId, rentalDateTime, returnDeadline)
+        val rental = Rental(operatorId, rentalDateTime, returnDeadline)
 
-        rentalRepository.startRental(rental)
+        val newBook = book.copy(rental = rental)
+
+        rentalRepository.startRental(newBook)
     }
 
     @Transactional

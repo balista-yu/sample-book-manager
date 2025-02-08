@@ -4,7 +4,6 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
 	id("org.springframework.boot") version "3.4.1"
 	id("io.spring.dependency-management") version "1.1.7"
-	id("com.qqviaja.gradle.MybatisGenerator") version "2.5"
 	id("io.gitlab.arturbosch.detekt").version("1.23.7")
 	kotlin("jvm") version "2.0.10"
 	kotlin("plugin.spring") version "2.0.10"
@@ -35,15 +34,12 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.springframework.boot:spring-boot-starter-security")
+	implementation("org.springframework.boot:spring-boot-starter-jdbc")
 
-	implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4")
-	implementation("org.mybatis.dynamic-sql:mybatis-dynamic-sql:1.5.2")
 	implementation("org.postgresql:postgresql:42.7.4")
-	implementation("org.mybatis.generator:mybatis-generator-core:1.4.2")
 	implementation("org.springframework.session:spring-session-data-redis")
 	implementation("redis.clients:jedis")
 	implementation("org.springframework.boot:spring-boot-starter-aop")
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
 	runtimeOnly("org.postgresql:postgresql")
 
@@ -52,7 +48,6 @@ dependencies {
 	testImplementation("org.assertj:assertj-core:3.27.2")
 	testImplementation("org.mockito:mockito-core:5.15.2")
 	testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
-	testImplementation("org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.4")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
@@ -95,13 +90,4 @@ tasks.register<Copy>("getDependencies") {
 	doLast {
 		println("Dependencies copied to runtime/")
 	}
-}
-
-configurations {
-	mybatisGenerator
-}
-
-mybatisGenerator {
-	verbose = true
-	configFile = "src/main/resources/generatorConfig.xml"
 }
