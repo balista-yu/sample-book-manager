@@ -2,7 +2,6 @@ package com.book.manager.presentation.controller
 
 import com.book.manager.application.service.BookService
 import com.book.manager.domain.model.Book
-import com.book.manager.domain.model.BookWithRental
 import com.book.manager.presentation.form.BookInfo
 import com.book.manager.presentation.form.GetBookListResponse
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -24,8 +23,8 @@ internal class BookControllerTest {
     @Test
     fun `getList is success`() {
         val bookId = 100
-        val book = Book(bookId, "title", "author", LocalDateTime.now())
-        val bookList = listOf(BookWithRental(book, null))
+        val book = Book(bookId, "title", "author", LocalDateTime.now(), null)
+        val bookList = listOf(book)
 
         whenever(bookService.getList()).thenReturn(bookList)
 
