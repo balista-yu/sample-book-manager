@@ -1,10 +1,11 @@
 package com.book.manager.sample_book_manager.application.service
 
-import com.book.manager.sample_book_manager.domain.enum.RoleType
+import com.book.manager.sample_book_manager.core.enum.RoleTypes
 import com.book.manager.sample_book_manager.domain.model.Book
 import com.book.manager.sample_book_manager.domain.model.BookWithRental
 import com.book.manager.sample_book_manager.domain.model.Operator
 import com.book.manager.sample_book_manager.domain.model.Rental
+import com.book.manager.sample_book_manager.domain.model.RoleType
 import com.book.manager.sample_book_manager.domain.repository.BookRepository
 import com.book.manager.sample_book_manager.domain.repository.OperatorRepository
 import com.book.manager.sample_book_manager.domain.repository.RentalRepository
@@ -29,7 +30,7 @@ internal class RentalServiceTest {
     fun `endRental when book is rental then delete to rental`() {
         val operatorId = 100
         val bookId = 1000
-        val operator = Operator(operatorId, "test@test.com", "pass", "kotlin", RoleType.GENERAL)
+        val operator = Operator(operatorId, "test@test.com", "pass", "kotlin", RoleType(RoleTypes.GENERAL))
         val book = Book(bookId, "title", "author", LocalDateTime.now())
         val rental = Rental(bookId, operatorId, LocalDateTime.now(), LocalDateTime.MAX)
         val bookWithRental = BookWithRental(book, rental)
@@ -48,7 +49,7 @@ internal class RentalServiceTest {
     fun `endRental when book is not rental then throw exception`() {
         val operatorId = 100
         val bookId = 1000
-        val operator = Operator(operatorId, "test@test.com", "pass", "kotlin", RoleType.GENERAL)
+        val operator = Operator(operatorId, "test@test.com", "pass", "kotlin", RoleType(RoleTypes.GENERAL))
         val book = Book(bookId, "title", "author", LocalDateTime.now())
         val bookWithRental = BookWithRental(book, null)
 

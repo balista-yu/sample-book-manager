@@ -1,8 +1,8 @@
 package com.book.manager.sample_book_manager.application.service.security
 
 import com.book.manager.sample_book_manager.application.service.AuthenticationService
-import com.book.manager.sample_book_manager.domain.enum.RoleType
 import com.book.manager.sample_book_manager.domain.model.Operator
+import com.book.manager.sample_book_manager.domain.model.RoleType
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.AuthorityUtils
 import org.springframework.security.core.userdetails.UserDetails

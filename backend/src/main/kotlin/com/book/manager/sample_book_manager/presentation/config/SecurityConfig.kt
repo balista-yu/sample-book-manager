@@ -2,7 +2,7 @@ package com.book.manager.sample_book_manager.presentation.config
 
 import com.book.manager.sample_book_manager.application.service.AuthenticationService
 import com.book.manager.sample_book_manager.application.service.security.BookManagerOperatorDetailsService
-import com.book.manager.sample_book_manager.domain.enum.RoleType
+import com.book.manager.sample_book_manager.core.enum.RoleTypes
 import com.book.manager.sample_book_manager.presentation.handler.BookManagerAccessDeniedHandler
 import com.book.manager.sample_book_manager.presentation.handler.BookManagerAuthenticationEntryPoint
 import com.book.manager.sample_book_manager.presentation.handler.BookManagerAuthenticationFailureHandler
@@ -28,7 +28,7 @@ class SecurityConfig(
         httpSecurity.authorizeHttpRequests { authorize ->
             authorize
                 .requestMatchers("/login").permitAll()
-                .requestMatchers("/admin/**").hasAuthority(RoleType.ADMIN.toString())
+                .requestMatchers("/admin/**").hasAuthority(RoleTypes.ADMIN.toString())
                 .anyRequest().authenticated()
         }
             .csrf { it.disable() }

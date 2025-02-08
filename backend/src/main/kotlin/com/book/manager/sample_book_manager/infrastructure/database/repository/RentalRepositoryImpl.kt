@@ -2,31 +2,21 @@ package com.book.manager.sample_book_manager.infrastructure.database.repository
 
 import com.book.manager.sample_book_manager.domain.model.Rental
 import com.book.manager.sample_book_manager.domain.repository.RentalRepository
-import com.book.manager.sample_book_manager.infrastructure.database.mapper.RentalMapper
-import com.book.manager.sample_book_manager.infrastructure.database.mapper.deleteByPrimaryKey
-import com.book.manager.sample_book_manager.infrastructure.database.mapper.insert
-import com.book.manager.sample_book_manager.infrastructure.database.record.RentalRecord
+import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Repository
 
 @Suppress("SpringJavaInjectionPointsAutowiringInspection")
 @Repository
 class RentalRepositoryImpl(
-    private val rentalMapper: RentalMapper
+    private val jdbcTemplate: JdbcTemplate
 ) : RentalRepository {
     override fun startRental(rental: Rental) {
-        rentalMapper.insert(toRecord(rental))
+        val sql = "INSERT INTO rental(book_id, operator_id, rental_datetime, return_deadline) VALUES (?, ?, ?, ?);"
+        jdbcTemplate.update(sql, rental.bookId, rental.operatorId, rental.rentalDatetime, rental.returnDeadline)
     }
 
     override fun endRental(bookId: Int) {
-        rentalMapper.deleteByPrimaryKey(bookId)
-    }
-
-    private fun toRecord(model: Rental): RentalRecord {
-        return RentalRecord(
-            model.bookId,
-            model.operatorId,
-            model.rentalDatetime,
-            model.returnDeadline
-        )
+        val sql = "DELETE FROM rental WHERE book_id = ?"
+        jdbcTemplate.update(sql, bookId)
     }
 }

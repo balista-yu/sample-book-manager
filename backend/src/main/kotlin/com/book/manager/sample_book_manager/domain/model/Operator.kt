@@ -1,7 +1,5 @@
 package com.book.manager.sample_book_manager.domain.model
 
-import com.book.manager.sample_book_manager.domain.enum.RoleType
-
 data class Operator(
     val id: Int,
     val email: String,
