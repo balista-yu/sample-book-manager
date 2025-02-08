@@ -4,7 +4,7 @@ Sample Book Manager
 
 ## Overview
 
-- Spring Boot と MyBatis で書籍管理のアプリケーションを作成するサンプル
+- Spring Bootで書籍管理のアプリケーションを作成するサンプル
 
 ## Getting Start
 
