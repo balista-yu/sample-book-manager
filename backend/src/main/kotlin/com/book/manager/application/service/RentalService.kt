@@ -1,5 +1,7 @@
 package com.book.manager.application.service
 
+import com.book.manager.domain.model.id.BookId
+import com.book.manager.domain.model.id.OperatorId
 import com.book.manager.domain.model.value.Rental
 import com.book.manager.domain.repository.BookRepository
 import com.book.manager.domain.repository.OperatorRepository
@@ -17,7 +19,7 @@ class RentalService(
     private val rentalRepository: RentalRepository
 ) {
     @Transactional
-    fun startRental(bookId: Int, operatorId: Int) {
+    fun startRental(bookId: BookId, operatorId: OperatorId) {
         require(operatorRepository.find(operatorId) != null) { "Operator not found" }
         val book = bookRepository.findWithRental(bookId) ?: throw IllegalArgumentException("Book not found")
 
@@ -33,7 +35,7 @@ class RentalService(
     }
 
     @Transactional
-    fun endRental(bookId: Int, operatorId: Int) {
+    fun endRental(bookId: BookId, operatorId: OperatorId) {
         require(operatorRepository.find(operatorId) != null) { "Operator not found" }
         val book = bookRepository.findWithRental(bookId) ?: throw IllegalArgumentException("Book not found")
 

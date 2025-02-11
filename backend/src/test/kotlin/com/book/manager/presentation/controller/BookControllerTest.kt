@@ -2,6 +2,7 @@ package com.book.manager.presentation.controller
 
 import com.book.manager.application.service.BookService
 import com.book.manager.domain.model.Book
+import com.book.manager.domain.model.id.BookId
 import com.book.manager.presentation.form.BookInfo
 import com.book.manager.presentation.form.GetBookListResponse
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -22,13 +23,13 @@ internal class BookControllerTest {
 
     @Test
     fun `getList is success`() {
-        val bookId = 100
+        val bookId = BookId("1")
         val book = Book(bookId, "title", "author", LocalDateTime.now(), null)
         val bookList = listOf(book)
 
         whenever(bookService.getList()).thenReturn(bookList)
 
-        val expectedResponse = GetBookListResponse(listOf(BookInfo(bookId, "title", "author", false)))
+        val expectedResponse = GetBookListResponse(listOf(BookInfo(bookId.value, "title", "author", false)))
         val expected = ObjectMapper().registerKotlinModule().writeValueAsString(expectedResponse)
         val mockMvc = MockMvcBuilders.standaloneSetup(bookController).build()
         val resultResponse = mockMvc.perform(get("/book/list"))

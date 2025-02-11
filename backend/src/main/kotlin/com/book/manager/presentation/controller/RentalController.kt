@@ -2,6 +2,7 @@ package com.book.manager.presentation.controller
 
 import com.book.manager.application.service.RentalService
 import com.book.manager.application.service.security.BookManagerOperatorDetails
+import com.book.manager.domain.model.id.BookId
 import com.book.manager.presentation.form.RentalStartRequest
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.CrossOrigin
@@ -21,12 +22,12 @@ class RentalController(
     @PostMapping("/start")
     fun startRental(@RequestBody request: RentalStartRequest) {
         val operator = SecurityContextHolder.getContext().authentication.principal as BookManagerOperatorDetails
-        rentalService.startRental(request.bookId, operator.id)
+        rentalService.startRental(BookId(request.bookId), operator.id)
     }
 
     @DeleteMapping("/end/{book_id}")
-    fun endRental(@PathVariable("book_id") bookId: Int) {
+    fun endRental(@PathVariable("book_id") bookId: String) {
         val operator = SecurityContextHolder.getContext().authentication.principal as BookManagerOperatorDetails
-        rentalService.endRental(bookId, operator.id)
+        rentalService.endRental(BookId(bookId), operator.id)
     }
 }

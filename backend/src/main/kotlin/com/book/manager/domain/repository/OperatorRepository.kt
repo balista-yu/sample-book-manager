@@ -1,8 +1,9 @@
 package com.book.manager.domain.repository
 
 import com.book.manager.domain.model.Operator
+import com.book.manager.domain.model.id.OperatorId
 
 interface OperatorRepository {
     fun find(email: String): Operator?
-    fun find(id: Int): Operator?
+    fun find(id: OperatorId): Operator?
 }
