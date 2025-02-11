@@ -1,6 +1,7 @@
 package com.book.manager.application.service
 
 import com.book.manager.domain.model.Book
+import com.book.manager.domain.model.id.BookId
 import com.book.manager.domain.repository.BookRepository
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
@@ -15,7 +16,7 @@ internal class BookServiceTest {
 
     @Test
     fun `getList when book list is exist then return list`() {
-        val book = Book(1, "title", "author", LocalDateTime.now(), null)
+        val book = Book(BookId("1"), "title", "author", LocalDateTime.now(), null)
         val expected = listOf(book)
 
         whenever(bookRepository.findAllWithRental()).thenReturn(expected)

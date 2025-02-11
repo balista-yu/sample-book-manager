@@ -2,6 +2,7 @@ package com.book.manager.application.service.security
 
 import com.book.manager.application.service.AuthenticationService
 import com.book.manager.domain.model.Operator
+import com.book.manager.domain.model.id.OperatorId
 import com.book.manager.domain.model.value.RoleType
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.AuthorityUtils
@@ -18,7 +19,7 @@ class BookManagerOperatorDetailsService(
 }
 
 data class BookManagerOperatorDetails(
-    val id: Int,
+    val id: OperatorId,
     val email: String,
     val pass: String,
     val roleType: RoleType

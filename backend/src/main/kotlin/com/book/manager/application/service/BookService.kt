@@ -1,6 +1,7 @@
 package com.book.manager.application.service
 
 import com.book.manager.domain.model.Book
+import com.book.manager.domain.model.id.BookId
 import com.book.manager.domain.repository.BookRepository
 import org.springframework.stereotype.Service
 
@@ -12,7 +13,7 @@ class BookService(
         return bookRepository.findAllWithRental()
     }
 
-    fun getDetail(bookId: Int): Book {
+    fun getDetail(bookId: BookId): Book {
         return bookRepository.findWithRental(bookId) ?: throw IllegalArgumentException("Book not found")
     }
 }

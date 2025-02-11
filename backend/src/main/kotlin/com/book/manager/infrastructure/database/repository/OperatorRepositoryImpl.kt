@@ -1,6 +1,7 @@
 package com.book.manager.infrastructure.database.repository
 
 import com.book.manager.domain.model.Operator
+import com.book.manager.domain.model.id.OperatorId
 import com.book.manager.domain.repository.OperatorRepository
 import com.book.manager.infrastructure.database.hydrator.OperatorHydrator
 import org.springframework.jdbc.core.JdbcTemplate
@@ -16,8 +17,8 @@ class OperatorRepositoryImpl(
         return jdbcTemplate.query(sql, { rs, _ -> operatorHydrator.hydrate(rs) }, email).firstOrNull()
     }
 
-    override fun find(id: Int): Operator? {
+    override fun find(id: OperatorId): Operator? {
         val sql = "SELECT id, email, password, name, role_type FROM operator WHERE id = ?;"
-        return jdbcTemplate.query(sql, { rs, _ -> operatorHydrator.hydrate(rs) }, id).firstOrNull()
+        return jdbcTemplate.query(sql, { rs, _ -> operatorHydrator.hydrate(rs) }, id.value).firstOrNull()
     }
 }

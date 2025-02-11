@@ -1,7 +1,9 @@
 package com.book.manager.presentation.controller
 
 import com.book.manager.application.service.AdminBookService
+import com.book.manager.core.domain.factory.IdFactory
 import com.book.manager.domain.model.Book
+import com.book.manager.domain.model.id.BookId
 import com.book.manager.presentation.form.RegisterBookRequest
 import com.book.manager.presentation.form.UpdateBookRequest
 import org.springframework.web.bind.annotation.CrossOrigin
@@ -17,13 +19,14 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("admin/book")
 @CrossOrigin
 class AdminBookController(
-    private val adminBookService: AdminBookService
+    private val adminBookService: AdminBookService,
+    private val idFactory: IdFactory,
 ) {
     @PostMapping("/register")
     fun register(@RequestBody request: RegisterBookRequest) {
         adminBookService.register(
             Book(
-                id = request.id,
+                id = BookId(idFactory.create()),
                 title = request.title,
                 author = request.author,
                 releaseDate = request.releaseDate,
@@ -35,7 +38,7 @@ class AdminBookController(
     @PutMapping("/update")
     fun update(@RequestBody request: UpdateBookRequest) {
         adminBookService.update(
-            request.id,
+            BookId(request.id),
             request.title,
             request.author,
             request.releaseDate
@@ -43,7 +46,7 @@ class AdminBookController(
     }
 
     @DeleteMapping("/delete/{book_id}")
-    fun delete(@PathVariable("book_id") bookId: Int) {
-        adminBookService.delete(bookId)
+    fun delete(@PathVariable("book_id") bookId: String) {
+        adminBookService.delete(BookId(bookId))
     }
 }

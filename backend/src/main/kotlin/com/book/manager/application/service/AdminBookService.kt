@@ -1,6 +1,7 @@
 package com.book.manager.application.service
 
 import com.book.manager.domain.model.Book
+import com.book.manager.domain.model.id.BookId
 import com.book.manager.domain.repository.BookRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -19,13 +20,13 @@ class AdminBookService(
     }
 
     @Transactional
-    fun update(bookId: Int, title: String?, author: String?, releaseDate: LocalDateTime?) {
+    fun update(bookId: BookId, title: String?, author: String?, releaseDate: LocalDateTime?) {
         bookRepository.findWithRental(bookId) ?: throw IllegalArgumentException("Book not found")
         bookRepository.update(bookId, title, author, releaseDate)
     }
 
     @Transactional
-    fun delete(bookId: Int) {
+    fun delete(bookId: BookId) {
         bookRepository.findWithRental(bookId) ?: throw IllegalArgumentException("Book not found")
         bookRepository.delete(bookId)
     }
