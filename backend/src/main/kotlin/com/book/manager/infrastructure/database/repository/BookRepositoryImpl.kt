@@ -1,6 +1,6 @@
 package com.book.manager.infrastructure.database.repository
 
-import com.book.manager.domain.model.Book
+import com.book.manager.domain.model.entity.Book
 import com.book.manager.domain.model.id.BookId
 import com.book.manager.domain.repository.BookRepository
 import com.book.manager.infrastructure.database.hydrator.BookHydrator

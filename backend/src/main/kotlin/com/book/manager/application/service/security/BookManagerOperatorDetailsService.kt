@@ -1,7 +1,7 @@
 package com.book.manager.application.service.security
 
 import com.book.manager.application.service.AuthenticationService
-import com.book.manager.domain.model.Operator
+import com.book.manager.domain.model.entity.Operator
 import com.book.manager.domain.model.id.OperatorId
 import com.book.manager.domain.model.value.RoleType
 import org.springframework.security.core.GrantedAuthority

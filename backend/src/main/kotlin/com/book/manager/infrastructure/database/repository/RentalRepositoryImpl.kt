@@ -1,6 +1,6 @@
 package com.book.manager.infrastructure.database.repository
 
-import com.book.manager.domain.model.Book
+import com.book.manager.domain.model.entity.Book
 import com.book.manager.domain.model.id.BookId
 import com.book.manager.domain.repository.RentalRepository
 import org.springframework.jdbc.core.JdbcTemplate

@@ -1,6 +1,6 @@
 package com.book.manager.infrastructure.database.repository
 
-import com.book.manager.domain.model.Operator
+import com.book.manager.domain.model.entity.Operator
 import com.book.manager.domain.model.id.OperatorId
 import com.book.manager.domain.repository.OperatorRepository
 import com.book.manager.infrastructure.database.hydrator.OperatorHydrator

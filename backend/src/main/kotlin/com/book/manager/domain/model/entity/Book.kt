@@ -1,4 +1,4 @@
-package com.book.manager.domain.model
+package com.book.manager.domain.model.entity
 
 import com.book.manager.domain.model.id.BookId
 import com.book.manager.domain.model.value.Rental

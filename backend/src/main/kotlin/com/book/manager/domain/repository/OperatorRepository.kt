@@ -1,6 +1,6 @@
 package com.book.manager.domain.repository
 
-import com.book.manager.domain.model.Operator
+import com.book.manager.domain.model.entity.Operator
 import com.book.manager.domain.model.id.OperatorId
 
 interface OperatorRepository {

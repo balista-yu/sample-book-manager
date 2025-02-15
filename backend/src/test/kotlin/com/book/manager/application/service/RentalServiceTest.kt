@@ -1,8 +1,8 @@
 package com.book.manager.application.service
 
 import com.book.manager.core.enum.RoleTypes
-import com.book.manager.domain.model.Book
-import com.book.manager.domain.model.Operator
+import com.book.manager.domain.model.entity.Book
+import com.book.manager.domain.model.entity.Operator
 import com.book.manager.domain.model.id.BookId
 import com.book.manager.domain.model.id.OperatorId
 import com.book.manager.domain.model.value.Rental
