@@ -1,6 +1,6 @@
 package com.book.manager.presentation.aop
 
-import com.book.manager.application.service.security.BookManagerOperatorDetails
+import com.book.manager.usecase.security.BookManagerOperatorDetails
 import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.After

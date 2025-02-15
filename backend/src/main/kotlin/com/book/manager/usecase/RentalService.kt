@@ -1,4 +1,4 @@
-package com.book.manager.application.service
+package com.book.manager.usecase
 
 import com.book.manager.domain.model.id.BookId
 import com.book.manager.domain.model.id.OperatorId

@@ -1,7 +1,7 @@
 package com.book.manager.presentation.config
 
-import com.book.manager.application.service.AuthenticationService
-import com.book.manager.application.service.security.BookManagerOperatorDetailsService
+import com.book.manager.usecase.AuthenticationService
+import com.book.manager.usecase.security.BookManagerOperatorDetailsService
 import com.book.manager.core.enum.RoleTypes
 import com.book.manager.presentation.handler.BookManagerAccessDeniedHandler
 import com.book.manager.presentation.handler.BookManagerAuthenticationEntryPoint

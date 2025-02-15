@@ -1,6 +1,6 @@
 package com.book.manager.presentation.controller
 
-import com.book.manager.application.service.BookService
+import com.book.manager.usecase.BookService
 import com.book.manager.domain.model.id.BookId
 import com.book.manager.presentation.form.BookInfo
 import com.book.manager.presentation.form.GetBookDetailResponse

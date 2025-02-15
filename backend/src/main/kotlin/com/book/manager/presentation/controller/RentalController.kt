@@ -1,7 +1,7 @@
 package com.book.manager.presentation.controller
 
-import com.book.manager.application.service.RentalService
-import com.book.manager.application.service.security.BookManagerOperatorDetails
+import com.book.manager.usecase.RentalService
+import com.book.manager.usecase.security.BookManagerOperatorDetails
 import com.book.manager.domain.model.id.BookId
 import com.book.manager.presentation.form.RentalStartRequest
 import org.springframework.security.core.context.SecurityContextHolder

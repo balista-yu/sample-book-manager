@@ -1,6 +1,6 @@
 package com.book.manager.presentation.controller
 
-import com.book.manager.application.service.AdminBookService
+import com.book.manager.usecase.AdminBookService
 import com.book.manager.core.domain.factory.IdFactory
 import com.book.manager.domain.model.entity.Book
 import com.book.manager.domain.model.id.BookId
