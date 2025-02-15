@@ -4,8 +4,6 @@ spring:
     username: test
     password: test
     driverClassName: org.postgresql.Driver
-  jackson:
-    property-naming-strategy: SNAKE_CASE
   data:
     redis:
       host: redis
