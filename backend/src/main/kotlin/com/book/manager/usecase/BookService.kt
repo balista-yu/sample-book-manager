@@ -1,6 +1,6 @@
-package com.book.manager.application.service
+package com.book.manager.usecase
 
-import com.book.manager.domain.model.Book
+import com.book.manager.domain.model.entity.Book
 import com.book.manager.domain.model.id.BookId
 import com.book.manager.domain.repository.BookRepository
 import org.springframework.stereotype.Service

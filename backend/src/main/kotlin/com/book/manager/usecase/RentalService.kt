@@ -1,5 +1,6 @@
-package com.book.manager.application.service
+package com.book.manager.usecase
 
+import com.book.manager.domain.criteria.OperatorCriteria
 import com.book.manager.domain.model.id.BookId
 import com.book.manager.domain.model.id.OperatorId
 import com.book.manager.domain.model.value.Rental
@@ -20,7 +21,7 @@ class RentalService(
 ) {
     @Transactional
     fun startRental(bookId: BookId, operatorId: OperatorId) {
-        require(operatorRepository.find(operatorId) != null) { "Operator not found" }
+        require(operatorRepository.find(OperatorCriteria(id = operatorId)) != null) { "Operator not found" }
         val book = bookRepository.findWithRental(bookId) ?: throw IllegalArgumentException("Book not found")
 
         require(!book.isRental) { "Book is already rented" }
@@ -36,7 +37,7 @@ class RentalService(
 
     @Transactional
     fun endRental(bookId: BookId, operatorId: OperatorId) {
-        require(operatorRepository.find(operatorId) != null) { "Operator not found" }
+        require(operatorRepository.find(OperatorCriteria(id = operatorId)) != null) { "Operator not found" }
         val book = bookRepository.findWithRental(bookId) ?: throw IllegalArgumentException("Book not found")
 
         check(book.isRental) { "Book is not rented" }

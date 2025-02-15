@@ -1,6 +1,6 @@
 package com.book.manager.presentation.form
 
-import com.book.manager.domain.model.Book
+import com.book.manager.domain.model.entity.Book
 import com.book.manager.domain.model.value.Rental
 import java.time.LocalDateTime
 

@@ -1,9 +1,9 @@
-package com.book.manager.application.service.security
+package com.book.manager.usecase.security
 
-import com.book.manager.application.service.AuthenticationService
-import com.book.manager.domain.model.Operator
+import com.book.manager.domain.model.entity.Operator
 import com.book.manager.domain.model.id.OperatorId
 import com.book.manager.domain.model.value.RoleType
+import com.book.manager.usecase.AuthenticationService
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.AuthorityUtils
 import org.springframework.security.core.userdetails.UserDetails

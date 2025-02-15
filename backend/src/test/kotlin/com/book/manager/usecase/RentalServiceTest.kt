@@ -1,8 +1,9 @@
-package com.book.manager.application.service
+package com.book.manager.usecase
 
 import com.book.manager.core.enum.RoleTypes
-import com.book.manager.domain.model.Book
-import com.book.manager.domain.model.Operator
+import com.book.manager.domain.criteria.OperatorCriteria
+import com.book.manager.domain.model.entity.Book
+import com.book.manager.domain.model.entity.Operator
 import com.book.manager.domain.model.id.BookId
 import com.book.manager.domain.model.id.OperatorId
 import com.book.manager.domain.model.value.Rental
@@ -35,12 +36,12 @@ internal class RentalServiceTest {
         val rental = Rental(operatorId, LocalDateTime.now(), LocalDateTime.MAX)
         val book = Book(bookId, "title", "author", LocalDateTime.now(), rental)
 
-        whenever(operatorRepository.find(operatorId)).thenReturn(operator)
+        whenever(operatorRepository.find(OperatorCriteria(id = operatorId))).thenReturn(operator)
         whenever(bookRepository.findWithRental(bookId)).thenReturn(book)
 
         rentalService.endRental(bookId, operatorId)
 
-        verify(operatorRepository).find(operatorId)
+        verify(operatorRepository).find(OperatorCriteria(id = operatorId))
         verify(bookRepository).findWithRental(bookId)
         verify(rentalRepository).endRental(bookId)
     }
@@ -52,7 +53,7 @@ internal class RentalServiceTest {
         val operator = Operator(operatorId, "test@test.com", "pass", "kotlin", RoleType(RoleTypes.GENERAL))
         val book = Book(bookId, "title", "author", LocalDateTime.now(), null)
 
-        whenever(operatorRepository.find(operatorId)).thenReturn(operator)
+        whenever(operatorRepository.find(OperatorCriteria(id = operatorId))).thenReturn(operator)
         whenever(bookRepository.findWithRental(bookId)).thenReturn(book)
 
         val exception = Assertions.assertThrows(IllegalStateException::class.java) {
@@ -61,7 +62,7 @@ internal class RentalServiceTest {
 
         assertThat(exception.message).isEqualTo("Book is not rented")
 
-        verify(operatorRepository).find(operatorId)
+        verify(operatorRepository).find(OperatorCriteria(id = operatorId))
         verify(bookRepository).findWithRental(bookId)
         verify(rentalRepository, times(0)).endRental(any())
     }
