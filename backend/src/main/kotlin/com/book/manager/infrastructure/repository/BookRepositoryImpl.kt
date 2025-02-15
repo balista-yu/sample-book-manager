@@ -1,9 +1,9 @@
-package com.book.manager.infrastructure.database.repository
+package com.book.manager.infrastructure.repository
 
 import com.book.manager.domain.model.entity.Book
 import com.book.manager.domain.model.id.BookId
 import com.book.manager.domain.repository.BookRepository
-import com.book.manager.infrastructure.database.hydrator.BookHydrator
+import com.book.manager.infrastructure.hydrator.BookHydrator
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Repository
 import java.time.LocalDateTime

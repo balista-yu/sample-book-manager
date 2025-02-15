@@ -1,9 +1,9 @@
-package com.book.manager.infrastructure.database.repository
+package com.book.manager.infrastructure.repository
 
 import com.book.manager.domain.model.entity.Operator
 import com.book.manager.domain.model.id.OperatorId
 import com.book.manager.domain.repository.OperatorRepository
-import com.book.manager.infrastructure.database.hydrator.OperatorHydrator
+import com.book.manager.infrastructure.hydrator.OperatorHydrator
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Repository
 

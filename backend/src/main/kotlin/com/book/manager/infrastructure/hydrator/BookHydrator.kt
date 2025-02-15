@@ -1,4 +1,4 @@
-package com.book.manager.infrastructure.database.hydrator
+package com.book.manager.infrastructure.hydrator
 
 import com.book.manager.domain.model.entity.Book
 import com.book.manager.domain.model.id.BookId

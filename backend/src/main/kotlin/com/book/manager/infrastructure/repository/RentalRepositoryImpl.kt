@@ -1,4 +1,4 @@
-package com.book.manager.infrastructure.database.repository
+package com.book.manager.infrastructure.repository
 
 import com.book.manager.domain.model.entity.Book
 import com.book.manager.domain.model.id.BookId
