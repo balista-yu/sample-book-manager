@@ -17,5 +17,5 @@ $ git clone https://github.com/balista-yu/sample-book-manager.git
 2. Run docker compose
 ```
 $ cd sample-book-manager
-$ task up
+$ task watch
 ```
