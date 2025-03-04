@@ -1,9 +1,9 @@
 package com.book.manager.presentation.controller
 
 import com.book.manager.domain.model.id.BookId
-import com.book.manager.presentation.form.BookInfo
-import com.book.manager.presentation.form.GetBookDetailResponse
-import com.book.manager.presentation.form.GetBookListResponse
+import com.book.manager.presentation.caster.BookInfo
+import com.book.manager.presentation.caster.GetBookDetailResponse
+import com.book.manager.presentation.caster.GetBookListResponse
 import com.book.manager.usecase.BookService
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
