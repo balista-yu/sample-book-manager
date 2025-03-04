@@ -1,11 +1,10 @@
-package com.book.manager.usecase
+package com.book.manager.usecase.start.rental
 
+import com.book.manager.core.domain.model.Id
 import com.book.manager.core.enum.RoleTypes
 import com.book.manager.domain.criteria.OperatorCriteria
 import com.book.manager.domain.model.entity.Book
 import com.book.manager.domain.model.entity.Operator
-import com.book.manager.domain.model.id.BookId
-import com.book.manager.domain.model.id.OperatorId
 import com.book.manager.domain.model.value.Rental
 import com.book.manager.domain.model.value.RoleType
 import com.book.manager.domain.repository.BookRepository
@@ -21,17 +20,34 @@ import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import java.time.LocalDateTime
 
-internal class RentalServiceTest {
+internal class StartRentalUseCaseTest {
     private val operatorRepository = mock<OperatorRepository>()
     private val bookRepository = mock<BookRepository>()
     private val rentalRepository = mock<RentalRepository>()
 
-    private val rentalService = RentalService(operatorRepository, bookRepository, rentalRepository)
+    private val startRentalUseCase = StartRentalUseCase(operatorRepository, bookRepository, rentalRepository)
 
     @Test
-    fun `endRental when book is rental then delete to rental`() {
-        val operatorId = OperatorId(100)
-        val bookId = BookId("1000")
+    fun testStartRental() {
+        val operatorId = Id.Numeric(100)
+        val bookId = Id.Text("1000")
+        val operator = Operator(operatorId, "test@test.com", "pass", "kotlin", RoleType(RoleTypes.GENERAL))
+        val book = Book(bookId, "title", "author", LocalDateTime.now(), null)
+
+        whenever(operatorRepository.find(OperatorCriteria(id = operatorId))).thenReturn(operator)
+        whenever(bookRepository.findWithRental(bookId)).thenReturn(book)
+
+        startRentalUseCase(bookId, operatorId)
+
+        verify(operatorRepository).find(OperatorCriteria(id = operatorId))
+        verify(bookRepository).findWithRental(bookId)
+        verify(rentalRepository, times(1)).startRental(any())
+    }
+
+    @Test
+    fun testStartRentalFailedWhenAlreadyRented() {
+        val operatorId = Id.Numeric(100)
+        val bookId = Id.Text("1000")
         val operator = Operator(operatorId, "test@test.com", "pass", "kotlin", RoleType(RoleTypes.GENERAL))
         val rental = Rental(operatorId, LocalDateTime.now(), LocalDateTime.MAX)
         val book = Book(bookId, "title", "author", LocalDateTime.now(), rental)
@@ -39,31 +55,14 @@ internal class RentalServiceTest {
         whenever(operatorRepository.find(OperatorCriteria(id = operatorId))).thenReturn(operator)
         whenever(bookRepository.findWithRental(bookId)).thenReturn(book)
 
-        rentalService.endRental(bookId, operatorId)
-
-        verify(operatorRepository).find(OperatorCriteria(id = operatorId))
-        verify(bookRepository).findWithRental(bookId)
-        verify(rentalRepository).endRental(bookId)
-    }
-
-    @Test
-    fun `endRental when book is not rental then throw exception`() {
-        val operatorId = OperatorId(100)
-        val bookId = BookId("1000")
-        val operator = Operator(operatorId, "test@test.com", "pass", "kotlin", RoleType(RoleTypes.GENERAL))
-        val book = Book(bookId, "title", "author", LocalDateTime.now(), null)
-
-        whenever(operatorRepository.find(OperatorCriteria(id = operatorId))).thenReturn(operator)
-        whenever(bookRepository.findWithRental(bookId)).thenReturn(book)
-
-        val exception = Assertions.assertThrows(IllegalStateException::class.java) {
-            rentalService.endRental(bookId, operatorId)
+        val exception = Assertions.assertThrows(IllegalArgumentException::class.java) {
+            startRentalUseCase(bookId, operatorId)
         }
 
-        assertThat(exception.message).isEqualTo("Book is not rented")
+        assertThat(exception.message).isEqualTo("Book is already rented")
 
         verify(operatorRepository).find(OperatorCriteria(id = operatorId))
         verify(bookRepository).findWithRental(bookId)
-        verify(rentalRepository, times(0)).endRental(any())
+        verify(rentalRepository, times(0)).startRental(any())
     }
 }
