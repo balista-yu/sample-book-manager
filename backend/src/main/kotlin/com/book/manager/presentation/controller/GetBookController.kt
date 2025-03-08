@@ -1,32 +1,23 @@
 package com.book.manager.presentation.controller
 
 import com.book.manager.domain.model.id.BookId
-import com.book.manager.presentation.caster.BookInfo
 import com.book.manager.presentation.caster.GetBookDetailResponse
-import com.book.manager.presentation.caster.GetBookListResponse
-import com.book.manager.usecase.BookService
+import com.book.manager.usecase.getBook.GetBookUseCase
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("book")
 @CrossOrigin
-class BookController(
-    private val bookService: BookService
+class GetBookController(
+    private val getBookUseCase: GetBookUseCase
 ) {
-    @GetMapping("/list")
-    fun getList(): GetBookListResponse {
-        val bookList = bookService.getList().map {
-            BookInfo(it)
-        }
-        return GetBookListResponse(bookList)
-    }
-
     @GetMapping("/detail/{bookId}")
-    fun getDetail(bookId: String): GetBookDetailResponse {
-        val book = bookService.getDetail(BookId(bookId))
+    operator fun invoke(@PathVariable("bookId")bookId: String): GetBookDetailResponse {
+        val book = getBookUseCase(BookId(bookId))
         return GetBookDetailResponse(book)
     }
 }

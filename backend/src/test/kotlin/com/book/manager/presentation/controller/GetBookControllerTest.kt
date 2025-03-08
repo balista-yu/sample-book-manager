@@ -2,10 +2,10 @@ package com.book.manager.presentation.controller
 
 import com.book.manager.domain.model.entity.Book
 import com.book.manager.domain.model.id.BookId
-import com.book.manager.presentation.caster.BookInfo
-import com.book.manager.presentation.caster.GetBookListResponse
-import com.book.manager.usecase.BookService
+import com.book.manager.presentation.caster.GetBookDetailResponse
+import com.book.manager.usecase.getBook.GetBookUseCase
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
@@ -17,22 +17,24 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import java.nio.charset.StandardCharsets
 import java.time.LocalDateTime
 
-internal class BookControllerTest {
-    private val bookService = mock<BookService>()
-    private val bookController = BookController(bookService)
+internal class GetBookControllerTest {
+    private val getBookUseCase = mock<GetBookUseCase>()
+    private val getBookController = GetBookController(getBookUseCase)
 
     @Test
-    fun `getList is success`() {
+    fun testGetBook() {
         val bookId = BookId("1")
         val book = Book(bookId, "title", "author", LocalDateTime.now(), null)
-        val bookList = listOf(book)
 
-        whenever(bookService.getList()).thenReturn(bookList)
+        whenever(getBookUseCase(bookId)).thenReturn(book)
 
-        val expectedResponse = GetBookListResponse(listOf(BookInfo(bookId.value, "title", "author", false)))
-        val expected = ObjectMapper().registerKotlinModule().writeValueAsString(expectedResponse)
-        val mockMvc = MockMvcBuilders.standaloneSetup(bookController).build()
-        val resultResponse = mockMvc.perform(get("/book/list"))
+        val expectedResponse = GetBookDetailResponse(book)
+        val expected = ObjectMapper()
+            .registerKotlinModule()
+            .registerModule(JavaTimeModule())
+            .writeValueAsString(expectedResponse)
+        val mockMvc = MockMvcBuilders.standaloneSetup(getBookController).build()
+        val resultResponse = mockMvc.perform(get("/book/detail/{bookId}", "1"))
             .andExpect(status().isOk)
             .andReturn()
             .response
