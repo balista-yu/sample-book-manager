@@ -1,4 +1,4 @@
-package com.book.manager.usecase.end.rental
+package com.book.manager.usecase.endRental
 
 import com.book.manager.core.domain.model.Id
 import com.book.manager.core.enum.RoleTypes

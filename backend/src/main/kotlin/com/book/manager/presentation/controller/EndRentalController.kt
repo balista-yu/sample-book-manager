@@ -1,7 +1,7 @@
 package com.book.manager.presentation.controller
 
 import com.book.manager.domain.model.id.BookId
-import com.book.manager.usecase.end.rental.EndRentalUseCase
+import com.book.manager.usecase.endRental.EndRentalUseCase
 import com.book.manager.usecase.security.BookManagerOperatorDetails
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.CrossOrigin

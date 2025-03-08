@@ -1,4 +1,4 @@
-package com.book.manager.usecase.start.rental
+package com.book.manager.usecase.startRental
 
 import com.book.manager.core.domain.model.Id
 import com.book.manager.core.enum.RoleTypes

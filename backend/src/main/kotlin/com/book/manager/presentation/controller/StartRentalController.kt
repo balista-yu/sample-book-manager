@@ -3,7 +3,7 @@ package com.book.manager.presentation.controller
 import com.book.manager.domain.model.id.BookId
 import com.book.manager.presentation.form.RentalStartRequest
 import com.book.manager.usecase.security.BookManagerOperatorDetails
-import com.book.manager.usecase.start.rental.StartRentalUseCase
+import com.book.manager.usecase.startRental.StartRentalUseCase
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.PostMapping
