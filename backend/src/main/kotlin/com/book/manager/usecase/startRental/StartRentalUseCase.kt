@@ -17,9 +17,6 @@ class StartRentalUseCase(
     private val bookRepository: BookRepository,
     private val rentalRepository: RentalRepository
 ) {
-    companion object {
-        private const val RENTAL_TERM_DAYS = 14L
-    }
 
     @Transactional
     operator fun invoke(bookId: BookId, operatorId: OperatorId) {
@@ -35,5 +32,9 @@ class StartRentalUseCase(
         val newBook = book.copy(rental = rental)
 
         rentalRepository.startRental(newBook)
+    }
+
+    companion object {
+        private const val RENTAL_TERM_DAYS = 14L
     }
 }
