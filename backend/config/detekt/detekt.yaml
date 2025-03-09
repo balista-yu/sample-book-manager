@@ -307,8 +307,8 @@ exceptions:
 naming:
   active: true
   BooleanPropertyNaming:
-    active: false
-    allowedPattern: '^(is|has|are)'
+    active: true
+    allowedPattern: '^(is|has|are|can)'
   ClassNaming:
     active: true
     classPattern: '[A-Z][a-zA-Z0-9]*'
@@ -321,8 +321,12 @@ naming:
     active: true
     enumEntryPattern: '[A-Z][_a-zA-Z0-9]*'
   ForbiddenClassName:
-    active: false
-    forbiddenName: []
+    active: true
+    forbiddenName:
+      - "*Info"
+      - "*Basic"
+      - "*Detail"
+      - "*Util"
   FunctionMaxLength:
     active: false
     maximumFunctionNameLength: 30
@@ -354,7 +358,7 @@ naming:
   NoNameShadowing:
     active: true
   NonBooleanPropertyPrefixedWithIs:
-    active: false
+    active: true
   ObjectPropertyNaming:
     active: true
     constantPattern: '[A-Za-z][_A-Za-z0-9]*'
