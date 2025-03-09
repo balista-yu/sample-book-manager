@@ -1,6 +1,6 @@
 package com.book.manager.presentation.aop
 
-import com.book.manager.usecase.security.BookManagerOperatorDetails
+import com.book.manager.usecase.security.BookManagerOperator
 import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.After
@@ -22,7 +22,7 @@ private val logger = LoggerFactory.getLogger(LoggingAdvice::class.java)
 class LoggingAdvice {
     @Before("execution(* com.book.manager.presentation.controller..*.*(..))")
     fun beforeLog(joinPoint: JoinPoint) {
-        val operator = SecurityContextHolder.getContext().authentication.principal as BookManagerOperatorDetails
+        val operator = SecurityContextHolder.getContext().authentication.principal as BookManagerOperator
         logger.info("Start: ${joinPoint.signature} operatorId=${operator.id}")
         logger.info("Class: ${joinPoint.target.javaClass}")
         logger.info(
@@ -32,13 +32,13 @@ class LoggingAdvice {
 
     @After("execution(* com.book.manager.presentation.controller..*.*(..))")
     fun afterLog(joinPoint: JoinPoint) {
-        val operator = SecurityContextHolder.getContext().authentication.principal as BookManagerOperatorDetails
+        val operator = SecurityContextHolder.getContext().authentication.principal as BookManagerOperator
         logger.info("End: ${joinPoint.signature} operatorId=${operator.id}")
     }
 
     @Around("execution(* com.book.manager.presentation.controller..*.*(..))")
     fun aroundLog(joinPoint: ProceedingJoinPoint): Any? {
-        val operator = SecurityContextHolder.getContext().authentication.principal as BookManagerOperatorDetails
+        val operator = SecurityContextHolder.getContext().authentication.principal as BookManagerOperator
         logger.info("Start Proceed: ${joinPoint.signature} operatorId=${operator.id}")
 
         val result = joinPoint.proceed()

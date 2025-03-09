@@ -6,9 +6,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class GetBooksUseCase(
-    private val bookRepository: BookRepository
+    private val bookRepository: BookRepository,
 ) {
-    operator fun invoke(): List<Book> {
-        return bookRepository.findAllWithRental()
-    }
+    operator fun invoke(): List<Book> = bookRepository.findAllWithRental()
 }

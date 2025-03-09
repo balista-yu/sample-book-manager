@@ -2,7 +2,7 @@ package com.book.manager.presentation.controller
 
 import com.book.manager.domain.model.entity.Book
 import com.book.manager.domain.model.id.BookId
-import com.book.manager.presentation.caster.GetBookDetailResponse
+import com.book.manager.presentation.caster.GetBookResponse
 import com.book.manager.usecase.getBook.GetBookUseCase
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
@@ -28,7 +28,7 @@ internal class GetBookControllerTest {
 
         whenever(getBookUseCase(bookId)).thenReturn(book)
 
-        val expectedResponse = GetBookDetailResponse(book)
+        val expectedResponse = GetBookResponse(book)
         val expected = ObjectMapper()
             .registerKotlinModule()
             .registerModule(JavaTimeModule())
