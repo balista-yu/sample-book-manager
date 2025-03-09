@@ -810,7 +810,7 @@ formatting:
     autoCorrect: true
     indentSize: 4
   ClassName:
-    active: false
+    active: true
   CommentSpacing:
     active: true
     autoCorrect: true
@@ -843,7 +843,7 @@ formatting:
     active: true
     autoCorrect: true
   FunctionName:
-    active: false
+    active: true
   FunctionReturnTypeSpacing:
     active: true
     autoCorrect: true
@@ -862,11 +862,11 @@ formatting:
     active: true
     autoCorrect: true
   IfElseBracing:
-    active: false
+    active: true
     autoCorrect: true
     indentSize: 4
   IfElseWrapping:
-    active: false
+    active: true
     autoCorrect: true
     indentSize: 4
   ImportOrdering:
@@ -917,7 +917,7 @@ formatting:
     active: true
     autoCorrect: true
   NoEmptyFirstLineInClassBody:
-    active: false
+    active: true
     autoCorrect: true
     indentSize: 4
   NoEmptyFirstLineInMethodBlock:
@@ -1023,27 +1023,27 @@ formatting:
     active: true
     autoCorrect: true
   StringTemplateIndent:
-    active: false
+    active: true
     autoCorrect: true
     indentSize: 4
   TrailingCommaOnCallSite:
-    active: false
+    active: true
     autoCorrect: true
     useTrailingCommaOnCallSite: true
   TrailingCommaOnDeclarationSite:
-    active: false
+    active: true
     autoCorrect: true
     useTrailingCommaOnDeclarationSite: true
   TryCatchFinallySpacing:
-    active: false
+    active: true
     autoCorrect: true
     indentSize: 4
   TypeArgumentListSpacing:
-    active: false
+    active: true
     autoCorrect: true
     indentSize: 4
   TypeParameterListSpacing:
-    active: false
+    active: true
     autoCorrect: true
     indentSize: 4
   UnnecessaryParenthesesBeforeTrailingLambda:
