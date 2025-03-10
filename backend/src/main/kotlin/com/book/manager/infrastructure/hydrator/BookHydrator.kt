@@ -16,7 +16,7 @@ class BookHydrator {
             Rental(
                 operatorId = OperatorId(rs.getInt("operator_id")),
                 rentalDatetime = rs.getTimestamp("rental_datetime").toLocalDateTime(),
-                returnDeadline = rs.getTimestamp("return_deadline").toLocalDateTime()
+                returnDeadline = rs.getTimestamp("return_deadline").toLocalDateTime(),
             )
         }
         return Book(
@@ -24,7 +24,7 @@ class BookHydrator {
             title = rs.getString("title"),
             author = rs.getString("author"),
             releaseDate = rs.getTimestamp("release_date").toLocalDateTime(),
-            rental = rental
+            rental = rental,
         )
     }
 }

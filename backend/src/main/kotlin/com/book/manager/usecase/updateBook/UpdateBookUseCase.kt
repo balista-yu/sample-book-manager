@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 
 @Service
 class UpdateBookUseCase(
-    private val bookRepository: BookRepository
+    private val bookRepository: BookRepository,
 ) {
     @Transactional
     operator fun invoke(bookId: BookId, title: String?, author: String?, releaseDate: LocalDateTime?) {

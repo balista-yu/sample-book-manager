@@ -8,5 +8,5 @@ data class Operator(
     val email: String,
     val password: String,
     val name: String,
-    val roleType: RoleType
+    val roleType: RoleType,
 )

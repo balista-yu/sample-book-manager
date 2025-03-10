@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class DeleteBookUseCase(
-    private val bookRepository: BookRepository
+    private val bookRepository: BookRepository,
 ) {
     @Transactional
     operator fun invoke(bookId: BookId) {

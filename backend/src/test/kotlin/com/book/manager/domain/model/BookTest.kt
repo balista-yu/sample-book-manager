@@ -23,7 +23,7 @@ internal class BookTest {
                 "Kotlin",
                 "taro",
                 LocalDateTime.now(),
-                Rental(OperatorId(1), LocalDateTime.now(), LocalDateTime.MAX)
+                Rental(OperatorId(1), LocalDateTime.now(), LocalDateTime.MAX),
             )
         Assertions.assertThat(book.isRental).isTrue()
     }

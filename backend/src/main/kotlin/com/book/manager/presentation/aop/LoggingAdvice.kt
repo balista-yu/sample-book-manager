@@ -26,7 +26,7 @@ class LoggingAdvice {
         logger.info("Start: ${joinPoint.signature} operatorId=${operator.id}")
         logger.info("Class: ${joinPoint.target.javaClass}")
         logger.info(
-            "Session: ${(RequestContextHolder.getRequestAttributes() as ServletRequestAttributes).request.session.id}"
+            "Session: ${(RequestContextHolder.getRequestAttributes() as ServletRequestAttributes).request.session.id}",
         )
     }
 
@@ -49,7 +49,7 @@ class LoggingAdvice {
 
     @AfterReturning(
         "execution(* com.book.manager.presentation.controller..*.*(..))",
-        returning = "returnValue"
+        returning = "returnValue",
     )
     fun afterReturningLog(joinPoint: JoinPoint, returnValue: Any?) {
         logger.info("End: ${joinPoint.signature} returnValue=$returnValue")

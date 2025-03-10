@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 class RegisterBookUseCase(
-    private val bookRepository: BookRepository
+    private val bookRepository: BookRepository,
 ) {
     @Transactional
     operator fun invoke(book: Book) {

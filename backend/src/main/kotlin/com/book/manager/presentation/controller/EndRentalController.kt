@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("rental")
 @CrossOrigin
 class EndRentalController(
-    private val endRentalUseCase: EndRentalUseCase
+    private val endRentalUseCase: EndRentalUseCase,
 ) {
     @DeleteMapping("/end/{book_id}")
     operator fun invoke(@PathVariable("book_id") bookId: String) {

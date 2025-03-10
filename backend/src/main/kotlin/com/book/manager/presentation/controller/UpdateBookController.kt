@@ -21,7 +21,7 @@ class UpdateBookController(
             BookId(request.id),
             request.title,
             request.author,
-            request.releaseDate
+            request.releaseDate,
         )
     }
 }

@@ -27,7 +27,7 @@ class RegisterBookController(
                 author = request.author,
                 releaseDate = request.releaseDate,
                 rental = null,
-            )
+            ),
         )
     }
 }

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("book")
 @CrossOrigin
 class GetBookController(
-    private val getBookUseCase: GetBookUseCase
+    private val getBookUseCase: GetBookUseCase,
 ) {
     @GetMapping("/detail/{bookId}")
     operator fun invoke(@PathVariable("bookId")bookId: String): GetBookResponse {

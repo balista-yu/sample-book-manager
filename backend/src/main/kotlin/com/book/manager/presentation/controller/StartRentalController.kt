@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("rental")
 @CrossOrigin
 class StartRentalController(
-    private val startRentalUseCase: StartRentalUseCase
+    private val startRentalUseCase: StartRentalUseCase,
 ) {
     @PostMapping("/start")
     operator fun invoke(@RequestBody request: RentalStartRequest) {

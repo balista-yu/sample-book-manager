@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional
 class EndRentalUseCase(
     private val operatorRepository: OperatorRepository,
     private val bookRepository: BookRepository,
-    private val rentalRepository: RentalRepository
+    private val rentalRepository: RentalRepository,
 ) {
     @Transactional
     operator fun invoke(bookId: BookId, operatorId: OperatorId) {
