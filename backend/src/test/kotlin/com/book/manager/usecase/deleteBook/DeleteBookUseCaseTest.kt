@@ -24,7 +24,7 @@ internal class DeleteBookUseCaseTest {
 
         whenever(bookRepository.findWithRental(bookId)).thenReturn(book)
 
-        deleteBookUseCase(bookId)
+        deleteBookUseCase(DeleteBookInput("1000"))
 
         verify(bookRepository, times(1)).findWithRental(bookId)
         verify(bookRepository, times(1)).delete(bookId)
@@ -37,7 +37,7 @@ internal class DeleteBookUseCaseTest {
         whenever(bookRepository.findWithRental(bookId)).thenReturn(null)
 
         val exception = Assertions.assertThrows(IllegalArgumentException::class.java) {
-            deleteBookUseCase(bookId)
+            deleteBookUseCase(DeleteBookInput("1000"))
         }
 
         assertThat(exception.message).isEqualTo("Book not found")

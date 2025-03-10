@@ -1,6 +1,6 @@
 package com.book.manager.presentation.controller
 
-import com.book.manager.domain.model.id.BookId
+import com.book.manager.usecase.deleteBook.DeleteBookInput
 import com.book.manager.usecase.deleteBook.DeleteBookUseCase
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -16,6 +16,6 @@ class DeleteBookController(
 ) {
     @DeleteMapping("/delete/{book_id}")
     operator fun invoke(@PathVariable("book_id") bookId: String) {
-        deleteBookUseCase(BookId(bookId))
+        deleteBookUseCase(DeleteBookInput(bookId))
     }
 }
