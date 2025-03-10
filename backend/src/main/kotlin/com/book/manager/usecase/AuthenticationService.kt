@@ -7,9 +7,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class AuthenticationService(
-    private val operatorRepository: OperatorRepository
+    private val operatorRepository: OperatorRepository,
 ) {
-    fun findOperator(email: String): Operator? {
-        return operatorRepository.find(OperatorCriteria(email = email))
-    }
+    fun findOperator(email: String): Operator? =
+        operatorRepository.find(OperatorCriteria(email = email))
 }

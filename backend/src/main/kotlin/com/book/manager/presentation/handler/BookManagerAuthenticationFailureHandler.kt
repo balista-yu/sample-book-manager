@@ -9,7 +9,7 @@ class BookManagerAuthenticationFailureHandler : AuthenticationFailureHandler {
     override fun onAuthenticationFailure(
         request: HttpServletRequest,
         response: HttpServletResponse,
-        exception: AuthenticationException
+        exception: AuthenticationException,
     ) {
         response.status = HttpServletResponse.SC_UNAUTHORIZED
     }

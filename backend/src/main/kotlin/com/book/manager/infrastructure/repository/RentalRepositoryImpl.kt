@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository
 
 @Repository
 class RentalRepositoryImpl(
-    private val jdbcTemplate: NamedParameterJdbcTemplate
+    private val jdbcTemplate: NamedParameterJdbcTemplate,
 ) : RentalRepository {
     override fun startRental(book: Book) {
         val sql =
@@ -32,7 +32,7 @@ class RentalRepositoryImpl(
         params["returnDeadline"] = book.rental.returnDeadline as Any
         jdbcTemplate.update(
             sql,
-            params
+            params,
         )
     }
 

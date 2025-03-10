@@ -5,7 +5,5 @@ import ulid.ULID
 
 @Component
 class IdFactory {
-    fun create(): String {
-        return ULID.randomULID()
-    }
+    fun create(): String = ULID.randomULID()
 }

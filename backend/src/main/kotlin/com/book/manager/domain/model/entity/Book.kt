@@ -9,7 +9,7 @@ data class Book(
     val title: String,
     val author: String,
     val releaseDate: LocalDateTime,
-    val rental: Rental?
+    val rental: Rental?,
 ) {
     val isRental: Boolean
         get() = rental != null

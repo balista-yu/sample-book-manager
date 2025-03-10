@@ -9,7 +9,7 @@ class BookManagerAuthenticationEntryPoint : AuthenticationEntryPoint {
     override fun commence(
         request: HttpServletRequest,
         response: HttpServletResponse,
-        authException: AuthenticationException
+        authException: AuthenticationException,
     ) {
         response.status = HttpServletResponse.SC_UNAUTHORIZED
     }

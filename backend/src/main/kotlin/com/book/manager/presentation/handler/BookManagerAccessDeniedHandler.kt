@@ -9,7 +9,7 @@ class BookManagerAccessDeniedHandler : AccessDeniedHandler {
     override fun handle(
         request: HttpServletRequest,
         response: HttpServletResponse,
-        accessDeniedException: AccessDeniedException
+        accessDeniedException: AccessDeniedException,
     ) {
         response.status = HttpServletResponse.SC_FORBIDDEN
     }

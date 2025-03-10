@@ -9,49 +9,35 @@ import org.springframework.security.core.authority.AuthorityUtils
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 
-class BookManagerOperatorDetailsService(
-    private val authenticationService: AuthenticationService
+class BookManagerOperatorService(
+    private val authenticationService: AuthenticationService,
 ) : UserDetailsService {
     override fun loadUserByUsername(username: String): UserDetails? {
         val operator = authenticationService.findOperator(username)
-        return operator?.let { BookManagerOperatorDetails(it) }
+        return operator?.let { BookManagerOperator(it) }
     }
 }
 
-data class BookManagerOperatorDetails(
+data class BookManagerOperator(
     val id: OperatorId,
     val email: String,
     val pass: String,
-    val roleType: RoleType
+    val roleType: RoleType,
 ) : UserDetails {
-
     constructor(operator: Operator) : this(operator.id, operator.email, operator.password, operator.roleType)
 
-    override fun getAuthorities(): Collection<GrantedAuthority> {
-        return AuthorityUtils.createAuthorityList(this.roleType.value.toString())
-    }
+    override fun getAuthorities(): Collection<GrantedAuthority> =
+        AuthorityUtils.createAuthorityList(this.roleType.value.toString())
 
-    override fun isEnabled(): Boolean {
-        return true
-    }
+    override fun isEnabled(): Boolean = true
 
-    override fun getUsername(): String {
-        return this.email
-    }
+    override fun getUsername(): String = this.email
 
-    override fun isCredentialsNonExpired(): Boolean {
-        return true
-    }
+    override fun isCredentialsNonExpired(): Boolean = true
 
-    override fun getPassword(): String {
-        return this.pass
-    }
+    override fun getPassword(): String = this.pass
 
-    override fun isAccountNonExpired(): Boolean {
-        return true
-    }
+    override fun isAccountNonExpired(): Boolean = true
 
-    override fun isAccountNonLocked(): Boolean {
-        return true
-    }
+    override fun isAccountNonLocked(): Boolean = true
 }

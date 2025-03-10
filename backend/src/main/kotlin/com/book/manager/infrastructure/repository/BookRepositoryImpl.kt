@@ -31,7 +31,7 @@ class BookRepositoryImpl(
                 rental r
             ON
                 b.id = r.book_id
-            """
+            """,
         )
         val params = mutableMapOf<String, Any>()
 
@@ -43,13 +43,11 @@ class BookRepositoryImpl(
         return jdbcTemplate.query(sql.toString(), params) { rs, _ -> bookHydrator.hydrate(rs) }
     }
 
-    override fun findWithRental(id: BookId): Book? {
-        return findAllWithRental(BookCriteria(id = id)).firstOrNull()
-    }
+    override fun findWithRental(id: BookId): Book? = findAllWithRental(BookCriteria(id = id)).firstOrNull()
 
     override fun register(book: Book) {
         val sql = StringBuilder(
-            "INSERT INTO book(id, title, author, release_date) VALUES (:id, :title, :author, :releaseDate)"
+            "INSERT INTO book(id, title, author, release_date) VALUES (:id, :title, :author, :releaseDate)",
         )
         val params = mutableMapOf<String, Any>()
         params["id"] = book.id.value

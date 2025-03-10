@@ -6,7 +6,7 @@ import com.book.manager.presentation.handler.BookManagerAuthenticationEntryPoint
 import com.book.manager.presentation.handler.BookManagerAuthenticationFailureHandler
 import com.book.manager.presentation.handler.BookManagerAuthenticationSuccessHandler
 import com.book.manager.usecase.AuthenticationService
-import com.book.manager.usecase.security.BookManagerOperatorDetailsService
+import com.book.manager.usecase.security.BookManagerOperatorService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -21,15 +21,18 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
 @Configuration
 class SecurityConfig(
-    private val authenticationService: AuthenticationService
+    private val authenticationService: AuthenticationService,
 ) {
     @Bean
     fun securityFilterChain(httpSecurity: HttpSecurity): SecurityFilterChain {
         httpSecurity.authorizeHttpRequests { authorize ->
             authorize
-                .requestMatchers("/login").permitAll()
-                .requestMatchers("/admin/**").hasAuthority(RoleTypes.ADMIN.value)
-                .anyRequest().authenticated()
+                .requestMatchers("/login")
+                .permitAll()
+                .requestMatchers("/admin/**")
+                .hasAuthority(RoleTypes.ADMIN.value)
+                .anyRequest()
+                .authenticated()
         }
             .csrf { it.disable() }
             .formLogin { formLogin ->
@@ -51,21 +54,20 @@ class SecurityConfig(
     }
 
     @Bean
-    fun authenticationManager(authenticationConfiguration: AuthenticationConfiguration): AuthenticationManager {
-        return authenticationConfiguration.authenticationManager
-    }
+    fun authenticationManager(authenticationConfiguration: AuthenticationConfiguration): AuthenticationManager =
+        authenticationConfiguration.authenticationManager
 
     @Bean
-    fun passwordEncoder(): PasswordEncoder {
-        return BCryptPasswordEncoder()
-    }
+    fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
         val corsConfiguration = CorsConfiguration()
         corsConfiguration.addAllowedMethod(CorsConfiguration.ALL)
         corsConfiguration.addAllowedHeader(CorsConfiguration.ALL)
-        corsConfiguration.addAllowedOrigin("^https?://(localhost|127\\.0\\.0\\.1)(:[0-9]+)?\$")
+        corsConfiguration.addAllowedOrigin(
+            """^https?://(localhost|127\.0\.0\.1)(:[0-9]+)?$""",
+        )
         corsConfiguration.allowCredentials = true
 
         val corsConfigurationSource = UrlBasedCorsConfigurationSource()
@@ -74,7 +76,5 @@ class SecurityConfig(
     }
 
     @Bean
-    fun userDetailsService(): BookManagerOperatorDetailsService {
-        return BookManagerOperatorDetailsService(authenticationService)
-    }
+    fun userDetailsService(): BookManagerOperatorService = BookManagerOperatorService(authenticationService)
 }
