@@ -10,7 +10,8 @@ class DeleteBookUseCase(
     private val bookRepository: BookRepository,
 ) {
     @Transactional
-    operator fun invoke(bookId: BookId) {
+    operator fun invoke(deleteBookInput: DeleteBookInput) {
+        val bookId = BookId(deleteBookInput.bookId)
         bookRepository.findWithRental(bookId) ?: throw IllegalArgumentException("Book not found")
         bookRepository.delete(bookId)
     }

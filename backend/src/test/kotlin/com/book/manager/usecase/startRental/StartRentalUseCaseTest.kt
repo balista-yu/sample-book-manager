@@ -5,6 +5,7 @@ import com.book.manager.core.enum.RoleTypes
 import com.book.manager.domain.criteria.OperatorCriteria
 import com.book.manager.domain.model.entity.Book
 import com.book.manager.domain.model.entity.Operator
+import com.book.manager.domain.model.id.BookId
 import com.book.manager.domain.model.value.Rental
 import com.book.manager.domain.model.value.RoleType
 import com.book.manager.domain.repository.BookRepository
@@ -30,14 +31,14 @@ internal class StartRentalUseCaseTest {
     @Test
     fun testStartRental() {
         val operatorId = Id.Numeric(100)
-        val bookId = Id.Text("1000")
+        val bookId = BookId("1000")
         val operator = Operator(operatorId, "test@test.com", "pass", "kotlin", RoleType(RoleTypes.GENERAL))
         val book = Book(bookId, "title", "author", LocalDateTime.now(), null)
 
         whenever(operatorRepository.find(OperatorCriteria(id = operatorId))).thenReturn(operator)
         whenever(bookRepository.findWithRental(bookId)).thenReturn(book)
 
-        startRentalUseCase(bookId, operatorId)
+        startRentalUseCase(StartRentalInput("1000", operatorId))
 
         verify(operatorRepository).find(OperatorCriteria(id = operatorId))
         verify(bookRepository).findWithRental(bookId)
@@ -47,7 +48,7 @@ internal class StartRentalUseCaseTest {
     @Test
     fun testStartRentalFailedWhenAlreadyRented() {
         val operatorId = Id.Numeric(100)
-        val bookId = Id.Text("1000")
+        val bookId = BookId("1000")
         val operator = Operator(operatorId, "test@test.com", "pass", "kotlin", RoleType(RoleTypes.GENERAL))
         val rental = Rental(operatorId, LocalDateTime.now(), LocalDateTime.MAX)
         val book = Book(bookId, "title", "author", LocalDateTime.now(), rental)
@@ -56,7 +57,7 @@ internal class StartRentalUseCaseTest {
         whenever(bookRepository.findWithRental(bookId)).thenReturn(book)
 
         val exception = Assertions.assertThrows(IllegalArgumentException::class.java) {
-            startRentalUseCase(bookId, operatorId)
+            startRentalUseCase(StartRentalInput("1000", operatorId))
         }
 
         assertThat(exception.message).isEqualTo("Book is already rented")

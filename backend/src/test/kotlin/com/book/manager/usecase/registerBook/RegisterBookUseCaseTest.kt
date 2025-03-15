@@ -1,12 +1,11 @@
 package com.book.manager.usecase.registerBook
 
-import com.book.manager.core.domain.model.Id
+import com.book.manager.core.domain.factory.IdFactory
 import com.book.manager.domain.model.entity.Book
+import com.book.manager.domain.model.id.BookId
 import com.book.manager.domain.repository.BookRepository
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.any
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
@@ -15,36 +14,25 @@ import java.time.LocalDateTime
 
 internal class RegisterBookUseCaseTest {
     private val bookRepository = mock<BookRepository>()
+    private val idFactory = mock<IdFactory>()
 
-    private val registerBookUseCase = RegisterBookUseCase(bookRepository)
+    private val registerBookUseCase = RegisterBookUseCase(bookRepository, idFactory)
 
     @Test
     fun testRegisterBook() {
-        val bookId = Id.Text("1000")
-        val book = Book(bookId, "title", "author", LocalDateTime.now(), null)
+        val releaseDate = LocalDateTime.now()
+        val book = Book(BookId("1000"), "title", "author", releaseDate, null)
 
-        whenever(bookRepository.findWithRental(bookId)).thenReturn(null)
+        whenever(idFactory.create()).thenReturn("1000")
 
-        registerBookUseCase(book)
-
-        verify(bookRepository, times(1)).findWithRental(bookId)
+        val output = registerBookUseCase(
+            RegisterBookInput(
+                "title",
+                "author",
+                releaseDate,
+            ),
+        )
         verify(bookRepository, times(1)).register(book)
-    }
-
-    @Test
-    fun testRegisterBookFailedWhenAlreadyRegistered() {
-        val bookId = Id.Text("1000")
-        val book = Book(bookId, "title", "author", LocalDateTime.now(), null)
-
-        whenever(bookRepository.findWithRental(bookId)).thenReturn(book)
-
-        val exception = Assertions.assertThrows(IllegalArgumentException::class.java) {
-            registerBookUseCase(book)
-        }
-
-        assertThat(exception.message).isEqualTo("Book already exists")
-
-        verify(bookRepository, times(1)).findWithRental(bookId)
-        verify(bookRepository, times(0)).register(any())
+        Assertions.assertNotNull(output.bookId.value)
     }
 }

@@ -2,7 +2,6 @@ package com.book.manager.usecase.endRental
 
 import com.book.manager.domain.criteria.OperatorCriteria
 import com.book.manager.domain.model.id.BookId
-import com.book.manager.domain.model.id.OperatorId
 import com.book.manager.domain.repository.BookRepository
 import com.book.manager.domain.repository.OperatorRepository
 import com.book.manager.domain.repository.RentalRepository
@@ -16,12 +15,15 @@ class EndRentalUseCase(
     private val rentalRepository: RentalRepository,
 ) {
     @Transactional
-    operator fun invoke(bookId: BookId, operatorId: OperatorId) {
-        require(operatorRepository.find(OperatorCriteria(id = operatorId)) != null) { "Operator not found" }
+    operator fun invoke(endRentalInput: EndRentalInput) {
+        require(
+            operatorRepository.find(OperatorCriteria(id = endRentalInput.operatorId)) != null,
+        ) { "Operator not found" }
+        val bookId = BookId(endRentalInput.bookId)
         val book = bookRepository.findWithRental(bookId) ?: throw IllegalArgumentException("Book not found")
 
         check(book.isRental) { "Book is not rented" }
-        check(book.rental!!.operatorId == operatorId) { "Operator is not the renter" }
+        check(book.rental!!.operatorId == endRentalInput.operatorId) { "Operator is not the renter" }
 
         rentalRepository.endRental(bookId)
     }

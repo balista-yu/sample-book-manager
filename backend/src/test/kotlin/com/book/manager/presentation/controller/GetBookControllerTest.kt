@@ -3,6 +3,7 @@ package com.book.manager.presentation.controller
 import com.book.manager.domain.model.entity.Book
 import com.book.manager.domain.model.id.BookId
 import com.book.manager.presentation.caster.GetBookResponse
+import com.book.manager.usecase.getBook.GetBookInput
 import com.book.manager.usecase.getBook.GetBookUseCase
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
@@ -26,7 +27,7 @@ internal class GetBookControllerTest {
         val bookId = BookId("1")
         val book = Book(bookId, "title", "author", LocalDateTime.now(), null)
 
-        whenever(getBookUseCase(bookId)).thenReturn(book)
+        whenever(getBookUseCase(GetBookInput("1"))).thenReturn(book)
 
         val expectedResponse = GetBookResponse(book)
         val expected = ObjectMapper()
