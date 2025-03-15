@@ -9,6 +9,6 @@ import org.springframework.stereotype.Service
 class GetBookUseCase(
     private val bookRepository: BookRepository,
 ) {
-    operator fun invoke(bookId: BookId): Book =
-        bookRepository.findWithRental(bookId) ?: throw IllegalArgumentException("Book not found")
+    operator fun invoke(getBookInput: GetBookInput): Book =
+        bookRepository.findWithRental(BookId(getBookInput.bookId)) ?: throw IllegalArgumentException("Book not found")
 }

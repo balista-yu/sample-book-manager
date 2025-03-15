@@ -1,7 +1,7 @@
 package com.book.manager.presentation.controller
 
-import com.book.manager.domain.model.id.BookId
 import com.book.manager.presentation.caster.GetBookResponse
+import com.book.manager.usecase.getBook.GetBookInput
 import com.book.manager.usecase.getBook.GetBookUseCase
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.GetMapping
@@ -17,7 +17,7 @@ class GetBookController(
 ) {
     @GetMapping("/detail/{bookId}")
     operator fun invoke(@PathVariable("bookId")bookId: String): GetBookResponse {
-        val book = getBookUseCase(BookId(bookId))
+        val book = getBookUseCase(GetBookInput(bookId))
         return GetBookResponse(book)
     }
 }

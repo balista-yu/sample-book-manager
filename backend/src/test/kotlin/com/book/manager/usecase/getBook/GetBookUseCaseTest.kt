@@ -20,7 +20,7 @@ internal class GetBookUseCaseTest {
         val book = Book(bookId, "title", "author", LocalDateTime.now(), null)
 
         whenever(bookRepository.findWithRental(bookId)).thenReturn(book)
-        val result = getBookUseCase(bookId)
+        val result = getBookUseCase(GetBookInput("1"))
         Assertions.assertThat(book).isEqualTo(result)
     }
 }
