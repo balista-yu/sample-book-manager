@@ -2,7 +2,6 @@ package com.book.manager.usecase.startRental
 
 import com.book.manager.domain.criteria.OperatorCriteria
 import com.book.manager.domain.model.id.BookId
-import com.book.manager.domain.model.id.OperatorId
 import com.book.manager.domain.model.value.Rental
 import com.book.manager.domain.repository.BookRepository
 import com.book.manager.domain.repository.OperatorRepository
@@ -18,15 +17,18 @@ class StartRentalUseCase(
     private val rentalRepository: RentalRepository,
 ) {
     @Transactional
-    operator fun invoke(bookId: BookId, operatorId: OperatorId) {
-        require(operatorRepository.find(OperatorCriteria(id = operatorId)) != null) { "Operator not found" }
+    operator fun invoke(startRentalInput: StartRentalInput) {
+        val bookId = BookId(startRentalInput.bookId)
+        require(
+            operatorRepository.find(OperatorCriteria(id = startRentalInput.operatorId)) != null,
+        ) { "Operator not found" }
         val book = bookRepository.findWithRental(bookId) ?: throw IllegalArgumentException("Book not found")
 
         require(!book.isRental) { "Book is already rented" }
 
         val rentalDateTime = LocalDateTime.now()
         val returnDeadline = rentalDateTime.plusDays(RENTAL_TERM_DAYS)
-        val rental = Rental(operatorId, rentalDateTime, returnDeadline)
+        val rental = Rental(startRentalInput.operatorId, rentalDateTime, returnDeadline)
 
         val newBook = book.copy(rental = rental)
 
