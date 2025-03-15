@@ -28,7 +28,6 @@ services:
       watch:
         - action: rebuild
           path: ./backend/build.gradle.kts
-    command: ["sh", "start.sh"]
 
   postgres:
     container_name: sample-book-manager-postgres-container
