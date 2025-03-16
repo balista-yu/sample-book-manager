@@ -21,6 +21,7 @@ env:
   REDIS_IMAGE_CACHE_TAG: sample-book-manager/redis:cache
   IMAGE_CACHE_DIR: /tmp/cache/docker-image
   IMAGE_CACHE_KEY: cache-image
+  GRADLE_OPTS: "-Xmx4g -XX:MaxMetaspaceSize=512m"
 
 jobs:
   image-cache-or-build:
