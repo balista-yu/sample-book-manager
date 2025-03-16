@@ -1,7 +1,7 @@
 package com.book.manager.presentation.controller
 
-import com.book.manager.domain.model.id.BookId
 import com.book.manager.presentation.form.UpdateBookRequest
+import com.book.manager.usecase.updateBook.UpdateBookInput
 import com.book.manager.usecase.updateBook.UpdateBookUseCase
 import org.springframework.web.bind.annotation.CrossOrigin
 import org.springframework.web.bind.annotation.PutMapping
@@ -18,10 +18,12 @@ class UpdateBookController(
     @PutMapping("/update")
     operator fun invoke(@RequestBody request: UpdateBookRequest) {
         updateBookUseCase(
-            BookId(request.id),
-            request.title,
-            request.author,
-            request.releaseDate,
+            UpdateBookInput(
+                request.id,
+                request.title,
+                request.author,
+                request.releaseDate,
+            ),
         )
     }
 }

@@ -38,7 +38,7 @@ internal class EndRentalUseCaseTest {
         whenever(operatorRepository.find(OperatorCriteria(id = operatorId))).thenReturn(operator)
         whenever(bookRepository.findWithRental(bookId)).thenReturn(book)
 
-        endRentalUseCase(bookId, operatorId)
+        endRentalUseCase(EndRentalInput("1000", operatorId))
 
         verify(operatorRepository).find(OperatorCriteria(id = operatorId))
         verify(bookRepository).findWithRental(bookId)
@@ -56,7 +56,7 @@ internal class EndRentalUseCaseTest {
         whenever(bookRepository.findWithRental(bookId)).thenReturn(book)
 
         val exception = Assertions.assertThrows(IllegalStateException::class.java) {
-            endRentalUseCase(bookId, operatorId)
+            endRentalUseCase(EndRentalInput("1000", operatorId))
         }
 
         assertThat(exception.message).isEqualTo("Book is not rented")
