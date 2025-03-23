@@ -21,6 +21,25 @@ DO
 $$
 BEGIN
     IF
+EXISTS (SELECT FROM pg_database WHERE datname = 'sample_book_manager_other') THEN
+        PERFORM pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'sample_book_manager_other';
+        DROP
+DATABASE sample_book_manager_other;
+END IF;
+END
+$$;
+
+CREATE DATABASE sample_book_manager_other
+    WITH OWNER = 'test'
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'ja_JP.UTF-8'
+    LC_CTYPE = 'ja_JP.UTF-8'
+    TEMPLATE = template0;
+
+DO
+$$
+BEGIN
+    IF
 EXISTS (SELECT FROM pg_database WHERE datname = 'sample_book_manager_test') THEN
         PERFORM pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'sample_book_manager_test';
         DROP
@@ -30,6 +49,25 @@ END
 $$;
 
 CREATE DATABASE sample_book_manager_test
+    WITH OWNER = 'test'
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'ja_JP.UTF-8'
+    LC_CTYPE = 'ja_JP.UTF-8'
+    TEMPLATE = template0;
+
+DO
+$$
+BEGIN
+    IF
+EXISTS (SELECT FROM pg_database WHERE datname = 'sample_book_manager_other_test') THEN
+        PERFORM pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'sample_book_manager_other_test';
+        DROP
+DATABASE sample_book_manager_other_test;
+END IF;
+END
+$$;
+
+CREATE DATABASE sample_book_manager_other_test
     WITH OWNER = 'test'
     ENCODING = 'UTF8'
     LC_COLLATE = 'ja_JP.UTF-8'
@@ -70,6 +108,17 @@ CREATE TABLE IF NOT EXISTS rental (
     return_deadline TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+INSERT INTO operator (email, password, name, role_type) VALUES ('test@example.com', '$2y$05$7IWY4KIY8l52R5XbTfU24uRw679eZeHHiSwtY2sfT5R7eAVGdJ1IS', 'test', 'ADMIN');
+
+\c sample_book_manager_other;
+
+CREATE TABLE IF NOT EXISTS book (
+    id CHAR(26) COLLATE "C" PRIMARY KEY,
+    title VARCHAR(128) NOT NULL,
+    author VARCHAR(32) NOT NULL,
+    release_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 \c sample_book_manager_test;
 
 DO
@@ -102,4 +151,13 @@ CREATE TABLE IF NOT EXISTS rental (
     operator_id INTEGER NOT NULL REFERENCES operator (id),
     rental_datetime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     return_deadline TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+\c sample_book_manager_other_test;
+
+CREATE TABLE IF NOT EXISTS book (
+    id CHAR(26) COLLATE "C" PRIMARY KEY,
+    title VARCHAR(128) NOT NULL,
+    author VARCHAR(32) NOT NULL,
+    release_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
