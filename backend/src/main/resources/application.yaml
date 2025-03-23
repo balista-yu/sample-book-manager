@@ -1,9 +1,17 @@
 spring:
+  jta:
+    enabled: true
   datasource:
-    url: jdbc:postgresql://postgres:5432/sample_book_manager
-    username: test
-    password: test
-    driverClassName: org.postgresql.Driver
+    first:
+      jdbcUrl: jdbc:postgresql://postgres:5432/sample_book_manager
+      username: test
+      password: test
+      driverClassName: org.postgresql.Driver
+    second:
+      jdbcUrl: jdbc:postgresql://postgres:5432/sample_book_manager_other
+      username: test
+      password: test
+      driverClassName: org.postgresql.Driver
   data:
     redis:
       host: redis
@@ -13,4 +21,9 @@ spring:
       enabled: true
 logging:
   level:
+    com:
+      atomikos: DEBUG
     root: INFO
+atomikos:
+  properties:
+    max-timeout: 900000

@@ -35,6 +35,8 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-jdbc")
+  implementation("com.atomikos:transactions-spring-boot3-starter:6.0.0")
+  implementation("jakarta.transaction:jakarta.transaction-api:2.0.1")
 
 	implementation("org.postgresql:postgresql:42.7.4")
 	implementation("org.springframework.session:spring-session-data-redis")
