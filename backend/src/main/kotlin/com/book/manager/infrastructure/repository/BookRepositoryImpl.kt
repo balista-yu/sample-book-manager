@@ -64,7 +64,7 @@ class BookRepositoryImpl(
 
         firstDataJdbc.update(sql.toString(), params)
 
-        // 分散トランザクションの憲章のため別DBにも書き込み
+        // 分散トランザクションの検証のため別DBにも書き込み
         val secondDataJdbc = NamedParameterJdbcTemplate(secondDataSource)
         secondDataJdbc.update(sql.toString(), params)
     }
